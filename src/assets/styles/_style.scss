@@ -1,14 +1,20 @@
 $background_color: #2F5BEA;
 .login {
+  margin-top: 10%;
   .login-form {
     background: $background_color;
+    box-shadow: 0 7px 30px 0 rgba(0,0,0,0.61);
     form {
       margin: auto;
       width: 70%;
     }
-    h5 {
+    h5, h3 {
       color: #fff;
       margin: auto;
+    }
+    h3 {
+      font-weight: 600;
+      line-height: 28px;
     }
     .title-row {
       padding-top: 30%;
@@ -18,6 +24,9 @@ $background_color: #2F5BEA;
       text-transform: uppercase;
       color: $background_color;
       background: #fff;
+      font-weight: 700;
+      letter-spacing: 0.35px;
+      padding: 10px 30px 10px 30px;
     }
     .register-form {
       padding-bottom: 30%;
@@ -26,6 +35,10 @@ $background_color: #2F5BEA;
       }
       .register-button {
         @extend .login-button;
+        font-weight: 700;
+        letter-spacing: 0.35px;
+        text-align: center;
+        padding: 10px 30px 10px 30px;
       }
     }
 
@@ -34,6 +47,7 @@ $background_color: #2F5BEA;
       color: #fff;
       opacity: 0.7;
       border: 2px solid #fff;
+      font-size: 20px;
       ::placeholder {
         color: #fff;
         opacity: 0.7;
