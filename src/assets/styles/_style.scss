@@ -12,6 +12,14 @@ $background_color: #2F5BEA;
       color: #fff;
       margin: auto;
     }
+    h5 {
+      @media screen and (max-width: 992px) {
+        font-size: 1rem;
+      }
+      @media screen and (min-width: 768) {
+        font-size: 1.25rem;
+      }
+    }
     h3 {
       font-weight: 600;
       line-height: 28px;
@@ -41,17 +49,65 @@ $background_color: #2F5BEA;
         padding: 10px 30px 10px 30px;
       }
     }
-
-    .context-input {
-      background: $background_color;
+    .password {
+      position: relative;
       color: #fff;
       opacity: 0.7;
-      border: 2px solid #fff;
-      font-size: 20px;
-      ::placeholder {
-        color: #fff;
-        opacity: 0.7;
+      span {
+        font-family: "proxima-nova, sans-serif";
+        font-weight: 100;
+        position: absolute;
+        right: 10px;
+        top: 10px;
       }
+      #show-password {
+        position: absolute;
+        right: 120px;
+        top: 13px;
+        input {
+          background: rgba(40, 40, 40, 0.2);
+          appearance: none;
+          color: black;
+          border: 1px solid #fff;
+          border-radius: 4px;
+          width: 17px;
+          height: 17px;
+          &:checked {
+            background: rgba(40, 40, 40, 1.0);
+          }
+        }
+      }
+      .forgot-link {
+        font-family: "proxima-nova, sans-serif";
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #fff;
+        text-decoration: underline;
+      }
+    }
+    input::placeholder {
+      color: #fff;
+      opacity: 0.7;
+    }
+    .context-input {
+      font-family: "proxima-nova, sans-serif";
+      background: $background_color;
+      color: #fff;
+      border: 1px solid #fff;
+      font-size: 20px;
+    }
+    .go-to-login-page {
+      padding-top: 44px;
+    }
+    @media screen and (max-width: 1201px) {
+      margin-top: 30%;
+    }
+    @media screen and (max-width: 992px){
+      margin-top: 60%;
+    }
+    @media screen and (max-width: 768px){
+      margin-top: 5%;
     }
   }
 }

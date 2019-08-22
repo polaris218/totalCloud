@@ -50,10 +50,10 @@ export default withAuth(class LoginForm extends Component {
     return (
       <div className="container login">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-5 offset-md-1">
+          <div className="col-md-5 offset-md-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row title-row">
@@ -68,7 +68,7 @@ export default withAuth(class LoginForm extends Component {
                     onChange={this.handleEmailChange}
                   />
                 </div>
-                <div className="form-row my-3">
+                <div className="form-row my-3 password">
                   <input
                     type="password"
                     className="form-control context-input"
@@ -76,6 +76,9 @@ export default withAuth(class LoginForm extends Component {
                     value={ this.state.password }
                     onChange={this.handlePasswordChange}
                   />
+                  <Link to="/forgotpassword" className="forgot-link">
+                    Forgot Password?
+                  </Link>
                 </div>
                 <div className="form-row mb-5">
                   <button type="submit" className="btn btn-primary mb-2 login-button">login</button>

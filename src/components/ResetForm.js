@@ -28,10 +28,10 @@ class Reset extends Component {
     return ( 
       <div className="container login">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-5 offset-md-1">
+          <div className="col-md-5 offset-md-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row title-row">
@@ -41,7 +41,7 @@ class Reset extends Component {
                   <input
                     type="password"
                     className="form-control context-input"
-                    placeholder="Confirm New Password"
+                    placeholder="Enter New Password"
                     value={ this.state.email }
                     onChange={this.handleEmailChange}
                   />
