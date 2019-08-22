@@ -41,7 +41,7 @@ class Reset extends Component {
                   <input
                     type="password"
                     className="form-control context-input"
-                    placeholder="Confirm New Password"
+                    placeholder="Enter New Password"
                     value={ this.state.email }
                     onChange={this.handleEmailChange}
                   />

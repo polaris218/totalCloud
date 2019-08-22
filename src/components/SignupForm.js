@@ -30,14 +30,21 @@ class SignupForm extends Component {
                     onChange={this.handleEmailChange}
                   />
                 </div>
-                <div className="form-row my-3">
+                <div className="form-row my-3 password">
                   <input
                     type="password"
                     className="form-control context-input"
-                    placeholder="set password"
+                    placeholder="Set Password"
                     value={ this.state.password }
                     onChange={this.handlePasswordChange}
                   />
+                  <div id="show-password">
+                    <input 
+                      type="checkbox"
+                    />
+                    
+                  </div>
+                  <span>Show Password</span>
                 </div>
                 <div className="form-row mb-5">
                   <button type="submit" className="btn btn-primary mb-2 login-button">Register</button>

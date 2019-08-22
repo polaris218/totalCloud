@@ -1,0 +1,37 @@
+.description {
+  h3, li {
+    font-family: "proxima-nova, sans-serif";
+    font-style: normal;
+    font-weight: 200;
+    font-size: 24px;
+  }
+  h3 {
+    margin-top: 21px;
+  }
+  ul {
+    list-style-image: url("../images/Ellipse.png");
+    padding: 20px;
+    li {
+      font-size: 20px;
+      line-height: 30px;
+      margin-top: 20px;
+      list-style-type: none;
+      &:nth-of-type(1) {
+        margin-top: 51px;
+      }
+      span {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  img {
+    &:nth-of-type(2) {
+      width: 100%;
+      margin-top: 70px;
+      @media screen and (max-width: 992px){
+        margin-top: 30px;
+      }
+    }
+  }
+}
