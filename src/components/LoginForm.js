@@ -76,7 +76,7 @@ export default withAuth(class LoginForm extends Component {
                     value={ this.state.password }
                     onChange={this.handlePasswordChange}
                   />
-                  <Link to="/reset" className="forgot-link">
+                  <Link to="/forgotpassword" className="forgot-link">
                     Forgot Password?
                   </Link>
                 </div>

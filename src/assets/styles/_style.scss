@@ -94,8 +94,11 @@ $background_color: #2F5BEA;
       font-family: "proxima-nova, sans-serif";
       background: $background_color;
       color: #fff;
-      border: 2px solid #fff;
+      border: 1px solid #fff;
       font-size: 20px;
+    }
+    .go-to-login-page {
+      padding-top: 44px;
     }
     @media screen and (max-width: 1201px) {
       margin-top: 30%;
