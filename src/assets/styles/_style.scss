@@ -1,0 +1,43 @@
+$background_color: #2F5BEA;
+.login {
+  .login-form {
+    background: $background_color;
+    form {
+      margin: auto;
+      width: 70%;
+    }
+    h5 {
+      color: #fff;
+      margin: auto;
+    }
+    .title-row {
+      padding-top: 30%;
+    }
+    .login-button {
+      width: 100%;
+      text-transform: uppercase;
+      color: $background_color;
+      background: #fff;
+    }
+    .register-form {
+      padding-bottom: 30%;
+      .register-link {
+        margin: auto;
+      }
+      .register-button {
+        @extend .login-button;
+      }
+    }
+
+    .context-input {
+      background: $background_color;
+      color: #fff;
+      opacity: 0.7;
+      border: 2px solid #fff;
+      ::placeholder {
+        color: #fff;
+        opacity: 0.7;
+      }
+    }
+  }
+}
