@@ -21,10 +21,12 @@ function App() {
         issuer="https://dev-605640.okta.com/oauth2/default"
         client_id='0oa164hj8culRfco6357'
         redirect_uri={ window.location.origin + '/implicit/callback' }
-        onAuthRequired={onAuthRequired}
+        onAuthRequired={ onAuthRequired }
+        scope="openid profile email"
       >
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route path='/' exact component={Home} />
+          {/* <Route path="/" exact component={Home} /> */}
           <Route path="/login" exact render={() => <Login baseUrl='https://dev-605640.okta.com' />} />
           <Route path="/signup" exact component={ Signup } />
           <Route path="/reset" exact component={ Reset } />

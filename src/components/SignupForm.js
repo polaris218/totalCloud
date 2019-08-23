@@ -6,9 +6,14 @@ import Description from "./Description";
 class SignupForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = { 
+      showPassword: false,
+    }
   }
   render() { 
+    const {
+      showPassword
+    } = this.state;
     return (
       <div className="container login">
         <div className="row">
@@ -32,7 +37,7 @@ class SignupForm extends Component {
                 </div>
                 <div className="form-row my-3 password">
                   <input
-                    type="password"
+                    type={showPassword ? `textfield`: `password`}
                     className="form-control context-input"
                     placeholder="Set Password"
                     value={ this.state.password }
@@ -41,8 +46,9 @@ class SignupForm extends Component {
                   <div id="show-password">
                     <input 
                       type="checkbox"
+                      value={ this.state.showPassword }
+                      onChange={() => this.setState({ showPassword: !this.state.showPassword })}
                     />
-                    
                   </div>
                   <span>Show Password</span>
                 </div>
