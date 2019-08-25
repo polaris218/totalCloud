@@ -11,7 +11,8 @@ export default withAuth(class LoginForm extends Component {
     this.state = {
       sessionToken: null,
       email: '',
-      password: ''
+      password: '',
+      error: null,
     }
 
     this.oktaAuth = new OktaAuth({ url: props.baseUrl });
@@ -30,7 +31,9 @@ export default withAuth(class LoginForm extends Component {
     .then(res => this.setState({
       sessionToken: res.sessionToken
     }))
-    .catch(err => console.log('Found an error', err));
+      .catch(err => {
+        console.log('Found an error', err);
+      });
   }
 
   handleEmailChange(e) {
