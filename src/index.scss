@@ -3,14 +3,18 @@
 
 @import "./assets/styles/description";
 
+@import "./assets/fonts/fontstyle";
+
+@mixin proximaFonts {
+  font-family: "Proxima Nova Regular";
+}
 body {
   margin: 0;
-  font-family: "Proxima Nova";
+  font-family: "Proxima Nova Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: "Proxima Nova";
 }
