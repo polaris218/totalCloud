@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Reset from "./pages/Reset";
 import Home from "./pages/Home";
 import Forgot from "./pages/Forgot";
+import Protected from "./pages/Protected";
 import './App.css';
 
 function onAuthRequired({history}) {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/signup" exact component={ Signup } />
           <Route path="/reset" exact component={ Reset } />
           <Route path="/forgotpassword" exact component={ Forgot } />
+          <SecureRoute path="/protected" exact component={Protected} />
           <Route path="/implicit/callback" exact component={ImplicitCallback} />
         </Switch>
       </Security>

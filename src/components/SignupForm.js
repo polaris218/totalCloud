@@ -8,7 +8,68 @@ class SignupForm extends Component {
     super(props);
     this.state = { 
       showPassword: false,
+      email: "",
+      firstName: "",
+      lastName: "",
+      login: "",
+      password: "",
+      privacyPolicy: false,
+      subscribe: false,
     }
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { email, password } = this.state;
+    const firstName = email.split("@")[0];
+    const lastName = firstName;
+
+    const headers = {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": `SSWS ${process.env.REACT_APP_API_KEY}`,
+    }
+    fetch(`${process.env.REACT_APP_CREATE_USER}`, {
+      method: "post",
+      headers,
+      body: JSON.stringify({
+        "profile": {
+          firstName,
+          lastName,
+          email,
+          login: email,
+        },
+        "credentials": {
+          "password": { 
+            "value": password
+          }
+        }
+      })
+    }).then(res => res.json())
+      .then(res => {
+        const {
+          id
+        } = res;
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users/${id}/lifecycle/activate?sendEmail=true`, {
+          method: "post",
+          headers,
+          body: JSON.stringify({})
+        }).then(res => res.json())
+          .then(res => {
+
+          })
+      })
   }
   render() { 
     const {
@@ -51,6 +112,22 @@ class SignupForm extends Component {
                     />
                   </div>
                   <span>Show Password</span>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    value={ this.state.privacyPolicy }
+                    onChange={ () => this.setState({ privacyPolicy: !this.state.privacyPolicy }) }
+                  />
+                  <span>T&C & Pricacy</span>  
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    value={ this.state.subscribe }
+                    onChange={ () => this.setState({ subscribe: !this.state.subscribe }) }
+                  />
+                  <span>Subscribe To Blog</span>  
                 </div>
                 <div className="form-row mb-5">
                   <button type="submit" className="btn btn-primary mb-2 login-button">Register</button>

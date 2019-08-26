@@ -26,7 +26,6 @@ export default withAuth(class Login extends Component {
 
   render() {
     if (this.state.authenticated === null) return null;
-    console.log(this.state.authenticated);
     return (
       this.state.authenticated ?
       <Redirect to={{ pathname: "/protected" }} /> :
