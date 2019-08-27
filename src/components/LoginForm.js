@@ -13,6 +13,8 @@ export default withAuth(class LoginForm extends Component {
       email: '',
       password: '',
       error: null,
+      loginFailed: false,
+      loginFailedMessage: "",
     }
 
     this.oktaAuth = new OktaAuth({ url: props.baseUrl });
@@ -32,6 +34,10 @@ export default withAuth(class LoginForm extends Component {
       sessionToken: res.sessionToken
     }))
       .catch(err => {
+        this.setState({
+          loginFailed: true,
+          loginFailedMessage: "Login Failed",
+        });
         console.log('Found an error', err);
       });
   }
@@ -49,7 +55,10 @@ export default withAuth(class LoginForm extends Component {
       this.props.auth.redirect({sessionToken: this.state.sessionToken});
       return null;
     }
-
+    const {
+      loginFailed,
+      loginFailedMessage
+    } = this.state;
     return (
       <div className="container login">
         <div className="row">
@@ -59,9 +68,15 @@ export default withAuth(class LoginForm extends Component {
           <div className="col-md-5 offset-md-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
-                <div className="form-row title-row">
+                <div className="form-row my-2 title-row">
                   <h3>Login</h3>
                 </div>
+                {
+                  loginFailed &&
+                    <div className="form-row failed-message">
+                      <p>{ loginFailedMessage }</p>
+                    </div>
+                }
                 <div className="form-row my-3">
                   <input
                     type="Email"

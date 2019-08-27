@@ -15,6 +15,7 @@ class SignupForm extends Component {
       password: "",
       privacyPolicy: false,
       subscribe: false,
+      awstips: false,
     }
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -113,7 +114,7 @@ class SignupForm extends Component {
                   </div>
                   <span>Show Password</span>
                 </div>
-                <div>
+                <div className="form-row agreements my-1">
                   <input
                     type="checkbox"
                     value={ this.state.privacyPolicy }
@@ -121,7 +122,7 @@ class SignupForm extends Component {
                   />
                   <span>T&C & Pricacy</span>  
                 </div>
-                <div>
+                <div className="form-row agreements">
                   <input
                     type="checkbox"
                     value={ this.state.subscribe }
@@ -129,17 +130,25 @@ class SignupForm extends Component {
                   />
                   <span>Subscribe To Blog</span>  
                 </div>
-                <div className="form-row mb-5">
+                <div className="form-row mb-1 my-4">
                   <button type="submit" className="btn btn-primary mb-2 login-button">Register</button>
                 </div>
-                <div className="form-row mb-3">
-                  <h5>Already have an account?</h5>
+                <div className="form-row awstipsform">
+                  <input
+                    type="checkbox"
+                    value={ this.state.awstips }
+                    onChange={() => this.setState({awstips: !this.state.awstips})}
+                  />
+                  <span>Get AWS tips and tricks delivered right to your inbox.</span>
                 </div>
-                <div className="form-row register-form">
+                <div className="form-row mb-5 my-5 have-account">
+                  <h6>Already have an account?<Link to="/login">Login</Link></h6>
+                </div>
+                {/* <div className="form-row register-form">
                   <Link to="/Login" className="register-link">
                     <button type="button" className="btn btn-primary mb-2 register-button">Login</button>
                   </Link>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
