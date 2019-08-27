@@ -98,7 +98,13 @@ $background_color: #2F5BEA;
         text-decoration: underline;
       }
     }
+    .email {
+      small {
+        color: rgba(255, 255, 0, 0.7);
+      }
+    }
     .agreements {
+      margin-left: 15px;
       input {
         @include checkbox();
       }
@@ -112,10 +118,15 @@ $background_color: #2F5BEA;
       input {
         @include checkbox();
       }
-      span {
+      label {
         color: #fff;
         margin-left: 10px;
         font-weight: 100;
+      }
+    }
+    .service-content {
+      h6 {
+        color: rgba(255, 255, 0, 0.7);
       }
     }
     .have-account {

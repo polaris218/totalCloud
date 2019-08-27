@@ -5,6 +5,10 @@ import { withAuth } from '@okta/okta-react';
 
 import Description from "./Description";
 
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
 export default withAuth(class LoginForm extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +19,7 @@ export default withAuth(class LoginForm extends Component {
       error: null,
       loginFailed: false,
       loginFailedMessage: "",
+      emailValidate: true,
     }
 
     this.oktaAuth = new OktaAuth({ url: props.baseUrl });
@@ -26,13 +31,16 @@ export default withAuth(class LoginForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.oktaAuth.signIn({
-      username: this.state.email,
-      password: this.state.password
-    })
-    .then(res => this.setState({
-      sessionToken: res.sessionToken
-    }))
+    if (!emailRegex.test(this.state.email)) {
+      this.setState({ emailValidate: false })
+    } else {
+      this.oktaAuth.signIn({
+        username: this.state.email,
+        password: this.state.password
+      })
+      .then(res => this.setState({
+        sessionToken: res.sessionToken
+      }))
       .catch(err => {
         this.setState({
           loginFailed: true,
@@ -40,10 +48,15 @@ export default withAuth(class LoginForm extends Component {
         });
         console.log('Found an error', err);
       });
+    }
+
   }
 
   handleEmailChange(e) {
-    this.setState({email: e.target.value});
+    this.setState({
+      email: e.target.value,
+      emailValidate: true,
+    });
   }
 
   handlePasswordChange(e) {
@@ -57,7 +70,8 @@ export default withAuth(class LoginForm extends Component {
     }
     const {
       loginFailed,
-      loginFailedMessage
+      loginFailedMessage,
+      emailValidate
     } = this.state;
     return (
       <div className="container login">
@@ -71,13 +85,7 @@ export default withAuth(class LoginForm extends Component {
                 <div className="form-row my-2 title-row">
                   <h3>Login</h3>
                 </div>
-                {
-                  loginFailed &&
-                    <div className="form-row failed-message">
-                      <p>{ loginFailedMessage }</p>
-                    </div>
-                }
-                <div className="form-row my-3">
+                <div className="form-row my-3 email">
                   <input
                     type="Email"
                     className="form-control context-input"
@@ -85,6 +93,7 @@ export default withAuth(class LoginForm extends Component {
                     value={ this.state.email }
                     onChange={this.handleEmailChange}
                   />
+                  {!emailValidate && <small>Email is not valid</small>}
                 </div>
                 <div className="form-row my-3 password">
                   <input
@@ -98,9 +107,15 @@ export default withAuth(class LoginForm extends Component {
                     Forgot Password?
                   </Link>
                 </div>
-                <div className="form-row mb-5">
+                <div className={`form-row ${!loginFailed && `mb-5`}`}>
                   <button type="submit" className="btn btn-primary mb-2 login-button">login</button>
                 </div>
+                {
+                  loginFailed &&
+                    <div className="form-row mb-5 failed-message">
+                      <p>{ loginFailedMessage }</p>
+                    </div>
+                }
                 <div className="form-row mb-3">
                   <h5>Create an account for free.</h5>
                 </div>
@@ -109,6 +124,7 @@ export default withAuth(class LoginForm extends Component {
                     <button type="button" className="btn btn-primary mb-2 register-button">Register</button>
                   </Link>
                 </div>
+                
               </form>
             </div>
           </div>
