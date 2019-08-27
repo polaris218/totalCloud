@@ -1,7 +1,20 @@
 $background_color: #2F5BEA;
+@mixin checkbox {
+  background: rgba(40, 40, 40, 0.2);
+  appearance: none;
+  color: black;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  width: 17px;
+  height: 17px;
+  &:checked {
+    background: rgba(40, 40, 40, 1.0);
+  }
+}
 .login {
   margin-top: 10%;
   .login-form {
+    margin-top: 10%;
     background: $background_color;
     box-shadow: 0 7px 30px 0 rgba(0,0,0,0.61);
     form {
@@ -9,7 +22,7 @@ $background_color: #2F5BEA;
       margin: auto;
       width: 70%;
     }
-    h5, h3 {
+    h5, h6, h3 {
       color: #fff;
       margin: auto;
     }
@@ -27,6 +40,13 @@ $background_color: #2F5BEA;
     }
     .title-row {
       padding-top: 30%;
+    }
+    .failed-message{
+      p {
+        margin: auto;
+        font-weight: 100;
+        color: rgba(255, 255, 0, 0.7);
+      }
     }
     .login-button {
       width: 100%;
@@ -66,16 +86,7 @@ $background_color: #2F5BEA;
         right: 120px;
         top: 13px;
         input {
-          background: rgba(40, 40, 40, 0.2);
-          appearance: none;
-          color: black;
-          border: 1px solid #fff;
-          border-radius: 4px;
-          width: 17px;
-          height: 17px;
-          &:checked {
-            background: rgba(40, 40, 40, 1.0);
-          }
+          @include checkbox();
         }
       }
       .forgot-link {
@@ -85,6 +96,47 @@ $background_color: #2F5BEA;
         right: 20px;
         color: #fff;
         text-decoration: underline;
+      }
+    }
+    .email {
+      small {
+        color: rgba(255, 255, 0, 0.7);
+      }
+    }
+    .agreements {
+      margin-left: 15px;
+      input {
+        @include checkbox();
+      }
+      span {
+        color: #fff;
+        margin-left: 10px;
+        font-weight: 100;
+      }
+    }
+    .awstipsform {
+      input {
+        @include checkbox();
+      }
+      label {
+        color: #fff;
+        margin-left: 10px;
+        font-weight: 100;
+      }
+    }
+    .service-content {
+      h6 {
+        color: rgba(255, 255, 0, 0.7);
+      }
+    }
+    .have-account {
+      padding-top: 20%;
+      a {
+        text-decoration: none;
+        color: #fff;
+        text-transform: uppercase;
+        margin-left: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3) ;
       }
     }
     input::placeholder {

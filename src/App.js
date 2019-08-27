@@ -7,7 +7,7 @@ import Signup from "./pages/Signup";
 import Reset from "./pages/Reset";
 import Home from "./pages/Home";
 import Forgot from "./pages/Forgot";
-import logo from './logo.svg';
+import Protected from "./pages/Protected";
 import './App.css';
 
 function onAuthRequired({history}) {
@@ -18,8 +18,8 @@ function App() {
   return (
     <Router>
       <Security
-        issuer="https://dev-605640.okta.com/oauth2/default"
-        client_id='0oa164hj8culRfco6357'
+        issuer={process.env.REACT_APP_ISSUER}
+        client_id={process.env.REACT_APP_CLIENTID}
         redirect_uri={ window.location.origin + '/implicit/callback' }
         onAuthRequired={ onAuthRequired }
         scope="openid profile email"
@@ -27,10 +27,11 @@ function App() {
         <Switch>
           <Route path='/' exact component={Home} />
           {/* <Route path="/" exact component={Home} /> */}
-          <Route path="/login" exact render={() => <Login baseUrl='https://dev-605640.okta.com' />} />
+          <Route path="/login" exact render={() => <Login baseUrl={process.env.REACT_APP_BASE_URL} />} />
           <Route path="/signup" exact component={ Signup } />
           <Route path="/reset" exact component={ Reset } />
           <Route path="/forgotpassword" exact component={ Forgot } />
+          <SecureRoute path="/protected" exact component={Protected} />
           <Route path="/implicit/callback" exact component={ImplicitCallback} />
         </Switch>
       </Security>
