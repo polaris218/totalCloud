@@ -110,6 +110,7 @@ class SignupForm extends Component {
                     type="Email"
                     className="form-control context-input"
                     placeholder="Email"
+                    autoComplete="off"
                     value={ this.state.email }
                     onChange={this.handleEmailChange}
                   />
@@ -120,13 +121,13 @@ class SignupForm extends Component {
                     type={showPassword ? `textfield`: `password`}
                     className="form-control context-input"
                     placeholder="Set Password"
+                    autoComplete="off"
                     value={ this.state.password }
                     onChange={this.handlePasswordChange}
                   />
                   <div id="show-password">
                     <input 
                       type="checkbox"
-                      className="form-check-input"
                       value={ this.state.showPassword }
                       onChange={() => this.setState({ showPassword: !this.state.showPassword })}
                     />
@@ -140,7 +141,7 @@ class SignupForm extends Component {
                     value={ this.state.privacyPolicy }
                     onChange={ () => this.setState({ privacyPolicy: !this.state.privacyPolicy }) }
                   />
-                  <span className="form-check-label text-white">T&C & Pricacy</span>  
+                  <span className="form-check-label text-white">T&C & Privacy & Policy</span>  
                 </div>
                 <div className="form-row agreements">
                   <input
@@ -158,7 +159,7 @@ class SignupForm extends Component {
                   <div className="form-check">
                     <input
                       type="checkbox"
-                      class="form-check-input"
+                      className="form-check-input"
                       value={ this.state.awstips }
                       onChange={() => this.setState({awstips: !this.state.awstips})}
                     />

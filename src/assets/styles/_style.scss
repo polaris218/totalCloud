@@ -18,7 +18,7 @@ $background_color: #2F5BEA;
     background: $background_color;
     box-shadow: 0 7px 30px 0 rgba(0,0,0,0.61);
     form {
-      font-family: "Proxima Nova Semibold";
+      font-family: "Proxima Nova Light";
       margin: auto;
       width: 70%;
     }
@@ -33,6 +33,9 @@ $background_color: #2F5BEA;
       @media screen and (min-width: 768) {
         font-size: 1.25rem;
       }
+    }
+    input:-webkit-autofill {
+      background-color: red !important;  
     }
     h3 {
       font-weight: 600;
@@ -55,7 +58,8 @@ $background_color: #2F5BEA;
       background: #fff;
       font-weight: 700;
       letter-spacing: 0.35px;
-      padding: 10px 30px 10px 30px;
+      padding: 10px 30px 10px 30px;font-family: "Proxima Nova Semibold";
+
     }
     .register-form {
       padding-bottom: 30%;
