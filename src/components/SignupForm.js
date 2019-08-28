@@ -141,7 +141,7 @@ class SignupForm extends Component {
                     value={ this.state.privacyPolicy }
                     onChange={ () => this.setState({ privacyPolicy: !this.state.privacyPolicy }) }
                   />
-                  <span className="form-check-label text-white">T&C & Privacy & Policy</span>  
+                  <span className="form-check-label text-white">T&C & Privacy Policy</span>  
                 </div>
                 <div className="form-row agreements">
                   <input

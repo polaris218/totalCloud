@@ -10,7 +10,8 @@ import Forgot from "./pages/Forgot";
 import Protected from "./pages/Protected";
 import './App.css';
 
-function onAuthRequired({history}) {
+function onAuthRequired({ history }) {
+  console.log("what");
   history.push('/login');
 }
 
@@ -22,11 +23,9 @@ function App() {
         client_id={process.env.REACT_APP_CLIENTID}
         redirect_uri={ window.location.origin + '/implicit/callback' }
         onAuthRequired={ onAuthRequired }
-        scope="openid profile email"
       >
         <Switch>
           <Route path='/' exact component={Home} />
-          {/* <Route path="/" exact component={Home} /> */}
           <Route path="/login" exact render={() => <Login baseUrl={process.env.REACT_APP_BASE_URL} />} />
           <Route path="/signup" exact component={ Signup } />
           <Route path="/reset" exact component={ Reset } />
