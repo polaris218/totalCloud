@@ -45,12 +45,12 @@ class ForgotForm extends Component {
 
   render() { 
     return ( 
-      <div className="container login">
+      <div className="container-fluid login">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4 offset-md-2 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-5 offset-md-1">
+          <div className="col-md-4 offset-md-1">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row title-row">
@@ -70,7 +70,7 @@ class ForgotForm extends Component {
                     send reset password link
                   </button>
                 </div>
-                <div className="form-row mb-3 go-to-login-page">
+                <div className="form-row go-to-login-page">
                   <h5>Go back to login page.&nbsp;<Link to="/Login" className="register-link">Login</Link></h5>
                 </div>
                 {/* <div className="form-row register-form">
