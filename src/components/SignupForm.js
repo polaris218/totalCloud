@@ -17,9 +17,7 @@ class SignupForm extends Component {
       lastName: "",
       login: "",
       password: "",
-      privacyPolicy: false,
-      subscribe: false,
-      awstips: false,
+      privacyPolicy: true,
       emailValidate: true,
       agreeTermsOfServices: true,
     }
@@ -29,7 +27,11 @@ class SignupForm extends Component {
   }
 
   handleEmailChange(e) {
-    this.setState({ email: e.target.value, emailValidate: true });
+    if (emailRegex.test(e.target.value)) {
+      this.setState({ email: e.target.value, emailValidate: true})
+    } else {
+      this.setState({ email: e.target.value, emailValidate: false})
+    }
   }
 
   handlePasswordChange(e) {
@@ -38,9 +40,9 @@ class SignupForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { email, password, privacyPolicy, subscribe, awstips } = this.state;
+    const { email, password, privacyPolicy } = this.state;
     if (emailRegex.test(email)) {
-      if (privacyPolicy && subscribe && awstips) {
+      if (privacyPolicy) {
         const firstName = email.split("@")[0];
         const lastName = firstName;
     
@@ -49,7 +51,7 @@ class SignupForm extends Component {
           "Content-Type": "application/json",
           "Authorization": `SSWS ${process.env.REACT_APP_API_KEY}`,
         }
-        fetch(`${process.env.REACT_APP_CREATE_USER}`, {
+        fetch(`${process.env.REACT_APP_SIGNUP_URL}`, {
           method: "post",
           headers,
           body: JSON.stringify({
@@ -65,21 +67,7 @@ class SignupForm extends Component {
               }
             }
           })
-        }).then(res => res.json())
-          .then(res => {
-            console.log(res);
-            const {
-              id
-            } = res;
-            fetch(`${process.env.REACT_APP_BASE_URL}/api/v1/users/${id}/lifecycle/activate?sendEmail=true`, {
-              method: "post",
-              headers,
-              body: JSON.stringify({})
-            }).then(res => res.json())
-              .then(res => {
-    
-              })
-          })
+        }).then(res => console.log(res))
       } else {
         this.setState({ agreeTermsOfServices: false})
       }
@@ -92,25 +80,25 @@ class SignupForm extends Component {
       showPassword,
       emailValidate,
       agreeTermsOfServices,
+      privacyPolicy,
     } = this.state;
     return (
-      <div className="container login">
+      <div className="container-fluid login">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4 offset-md-2 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-5 offset-md-1">
+          <div className="col-md-4 offset-md-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row title-row">
                   <h3>Register For Free</h3>
                 </div>
-                <div className="form-row my-3">
+                <div className="form-row my-3 email">
                   <input
                     type="Email"
                     className="form-control context-input"
                     placeholder="Email"
-                    autoComplete="off"
                     value={ this.state.email }
                     onChange={this.handleEmailChange}
                   />
@@ -140,40 +128,29 @@ class SignupForm extends Component {
                     className="form-check-input"
                     value={ this.state.privacyPolicy }
                     onChange={ () => this.setState({ privacyPolicy: !this.state.privacyPolicy }) }
+                    defaultChecked
                   />
-                  <span className="form-check-label text-white">T&C & Privacy Policy</span>  
-                </div>
-                <div className="form-row agreements">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    value={ this.state.subscribe }
-                    onChange={ () => this.setState({ subscribe: !this.state.subscribe }) }
-                  />
-                  <span className="form-check-label text-white">Subscribe To Blog</span>  
+                  <span className="form-check-label text-white">
+                    Subscribe to our blog & get AWS tips and tricks delivered right to your inbox.
+                  </span>  
                 </div>
                 <div className="form-row mb-1 my-4">
                   <button type="submit" className="btn btn-primary mb-2 login-button">Register</button>
                 </div>
-                <div className="form-row awstipsform">
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      value={ this.state.awstips }
-                      onChange={() => this.setState({awstips: !this.state.awstips})}
-                    />
-                    <label className="form-check-label text-white">
-                      Get AWS tips and tricks delivered right to your inbox.
-                    </label>
-                  </div>
+                <div className="form-row awstipsform text-center">
+                  <h6>
+                    By clicking on "Sign Up", you agree to our Terms & acknowledge reading our&nbsp;
+                    <Link to="/privacy">
+                      Privacy Policy
+                    </Link>
+                  </h6>
                 </div>
-                { !agreeTermsOfServices &&
+                { !privacyPolicy &&
                     <div className="form-row service-content">
                       <h6>Please agree of terms of services</h6>
                     </div>
                 }
-                <div className="form-row mb-5 my-5 have-account">
+                <div className="form-row mb-5 my-3 have-account">
                   <h6>Already have an account?<Link to="/login">Login</Link></h6>
                 </div>
               </form>

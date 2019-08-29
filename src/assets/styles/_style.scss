@@ -9,6 +9,7 @@ $background_color: #2F5BEA;
   height: 17px;
   &:checked {
     background: rgba(40, 40, 40, 1.0);
+    
   }
 }
 .login {
@@ -17,6 +18,8 @@ $background_color: #2F5BEA;
     margin-top: 10%;
     background: $background_color;
     box-shadow: 0 7px 30px 0 rgba(0,0,0,0.61);
+    margin-left: 30px;
+    height: 635px;
     form {
       font-family: "Proxima Nova Light";
       margin: auto;
@@ -48,7 +51,7 @@ $background_color: #2F5BEA;
       p {
         margin: auto;
         font-weight: 100;
-        color: rgba(255, 255, 0, 0.7);
+        color: red;
       }
     }
     .login-button {
@@ -104,7 +107,7 @@ $background_color: #2F5BEA;
     }
     .email {
       small {
-        color: rgba(255, 255, 0, 0.7);
+        color: red;
       }
     }
     .agreements {
@@ -118,6 +121,17 @@ $background_color: #2F5BEA;
         font-weight: 100;
       }
     }
+    .keepmelogin {
+      input {
+        @include checkbox();
+      }
+      label {
+        color: #fff;
+        margin-left: 5px;
+        font-weight: 100;
+      }
+      padding-bottom: 5%;
+    }
     .awstipsform {
       input {
         @include checkbox();
@@ -127,19 +141,27 @@ $background_color: #2F5BEA;
         margin-left: 10px;
         font-weight: 100;
       }
+      span {
+        text-align: center;
+      }
+      a {
+        color: #fff;
+        text-decoration: underline;
+      }
     }
     .service-content {
       h6 {
-        color: rgba(255, 255, 0, 0.7);
+        color: red;
       }
     }
     .have-account {
       padding-top: 20%;
       a {
+        font-weight: 600;
         text-decoration: none;
         color: #fff;
         text-transform: uppercase;
-        margin-left: 20px;
+        margin-left: 15px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3) ;
       }
     }
@@ -148,7 +170,7 @@ $background_color: #2F5BEA;
       opacity: 0.7;
     }
     .context-input {
-      font-family: "proxima-nova, sans-serif";
+      font-family: "proxima nova Thin";
       background: $background_color;
       color: #fff;
       border: 1px solid #fff;
@@ -156,6 +178,10 @@ $background_color: #2F5BEA;
     }
     .go-to-login-page {
       padding-top: 44px;
+      a {
+        color: #fff;
+        text-decoration: underline;
+      }
     }
     @media screen and (max-width: 1201px) {
       margin-top: 30%;

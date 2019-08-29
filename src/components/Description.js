@@ -6,14 +6,15 @@ const Description = () => (
   <div className="row description">
     <img src={ Logo } alt="Logo" />
     <h3>
-      Create cloud management platform using powerful pictorial workflows that enables one to automate specific tasks triggered.
+      A single tool to automate every AWS resource, the way you want.
     </h3>
     <ul>
       {
         [
-         `Create cloud management platform using powerful pictorial workflows that enables one to automate specific tasks triggered.`,
-         `Create cloud management platform using powerful pictorial workflows that enables one to automate specific tasks triggered.`,
-         `Create cloud management platform using powerful pictorial workflows that enables one to automate specific tasks triggered.`
+          `Hassle-free AWS automation to flexibly manage your cloud.`,
+          `No need to integrate multiple tools`,
+          `Create powerful workflows or simply pick from a wide range of predefined workflows.`,
+          `Eliminate the need for code by using predefined nodes to achieve any use case`
         ].map((item, key) => (
           <li key={ key }>
             <span>

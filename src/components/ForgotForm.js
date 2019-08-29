@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 
 import Description from "./Description";
 
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
 class ForgotForm extends Component {
   constructor(props) {
     super(props);
@@ -32,9 +36,11 @@ class ForgotForm extends Component {
   }
 
   handleEmailChange(e) {
-    this.setState({
-      email: e.target.value,
-    })
+    if (emailRegex.test(e.target.value)) {
+      this.setState({ email: e.target.value, emailValidate: true})
+    } else {
+      this.setState({ email: e.target.value, emailValidate: false})
+    }
   }
 
   render() { 
@@ -65,13 +71,13 @@ class ForgotForm extends Component {
                   </button>
                 </div>
                 <div className="form-row mb-3 go-to-login-page">
-                  <h5>Go back to login page.</h5>
+                  <h5>Go back to login page.&nbsp;<Link to="/Login" className="register-link">Login</Link></h5>
                 </div>
-                <div className="form-row register-form">
-                  <Link to="/Login" className="register-link">
-                    <button type="button" className="btn btn-primary mb-2 register-button">Login</button>
+                {/* <div className="form-row register-form">
+                  
+                    <button type="button" className="btn btn-primary mb-2 register-button"></button>
                   </Link>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>

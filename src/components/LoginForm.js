@@ -9,6 +9,10 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
+const passwordRegexp = RegExp(
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+)
+
 export default withAuth(class LoginForm extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +24,8 @@ export default withAuth(class LoginForm extends Component {
       loginFailed: false,
       loginFailedMessage: "",
       emailValidate: true,
+      keepmelogin: false,
+      passwordValidate: true,
     }
 
     this.oktaAuth = new OktaAuth({ url: props.baseUrl });
@@ -53,14 +59,16 @@ export default withAuth(class LoginForm extends Component {
   }
 
   handleEmailChange(e) {
-    this.setState({
-      email: e.target.value,
-      emailValidate: true,
-    });
+    if (emailRegex.test(e.target.value)) {
+      this.setState({ email: e.target.value, emailValidate: true})
+    } else {
+      this.setState({ email: e.target.value, emailValidate: false})
+    }
   }
 
   handlePasswordChange(e) {
-    this.setState({password: e.target.value});
+    this.setState({ password: e.target.value });
+    
   }
 
   render() {
@@ -74,12 +82,12 @@ export default withAuth(class LoginForm extends Component {
       emailValidate
     } = this.state;
     return (
-      <div className="container login">
+      <div className="container-fluid login">
         <div className="row">
-          <div className="col-md-6 col-xs-12">
+          <div className="col-md-4 offset-2 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-5 offset-md-1 col-xs-12">
+          <div className="col-md-4 offset-md-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row my-2 title-row">
@@ -107,6 +115,17 @@ export default withAuth(class LoginForm extends Component {
                     Forgot Password?
                   </Link>
                 </div>
+                <div className="form-row keepmelogin">
+                  <div className="form-check">
+                    <input 
+                      type="checkbox"
+                      className="form-check-input"
+                      value={ this.state.keepmelogin }
+                      onChange={ () => this.setState({ keepmelogin: !this.state.keepmelogin }) }
+                    />
+                    <label className="form-check-label text-white">Keep me logged in</label>
+                  </div>
+                </div>
                 <div className={`form-row ${!loginFailed && `mb-5`}`}>
                   <button type="submit" className="btn btn-primary mb-2 login-button">login</button>
                 </div>
@@ -116,15 +135,9 @@ export default withAuth(class LoginForm extends Component {
                       <p>{ loginFailedMessage }</p>
                     </div>
                 }
-                <div className="form-row mb-3">
-                  <h5>Create an account for free.</h5>
+                <div className="form-row mb-4 have-account">
+                  <h6>Create an FREE account.<Link to="/signup">Register</Link></h6>
                 </div>
-                <div className="form-row register-form">
-                  <Link to="/signup" className="register-link">
-                    <button type="button" className="btn btn-primary mb-2 register-button">Register</button>
-                  </Link>
-                </div>
-                
               </form>
             </div>
           </div>
