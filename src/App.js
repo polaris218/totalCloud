@@ -11,7 +11,6 @@ import Protected from "./pages/Protected";
 import './App.css';
 
 function onAuthRequired({ history }) {
-  console.log("what");
   history.push('/login');
 }
 

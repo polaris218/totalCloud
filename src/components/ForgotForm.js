@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 
 import Description from "./Description";
 
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
 class ForgotForm extends Component {
   constructor(props) {
     super(props);
@@ -32,19 +36,21 @@ class ForgotForm extends Component {
   }
 
   handleEmailChange(e) {
-    this.setState({
-      email: e.target.value,
-    })
+    if (emailRegex.test(e.target.value)) {
+      this.setState({ email: e.target.value, emailValidate: true})
+    } else {
+      this.setState({ email: e.target.value, emailValidate: false})
+    }
   }
 
   render() { 
     return ( 
-      <div className="container login">
+      <div className="container-fluid login">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4 offset-md-2 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-5 offset-md-1">
+          <div className="col-md-4 offset-md-1">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row title-row">
@@ -64,14 +70,14 @@ class ForgotForm extends Component {
                     send reset password link
                   </button>
                 </div>
-                <div className="form-row mb-3 go-to-login-page">
-                  <h5>Go back to login page.</h5>
+                <div className="form-row go-to-login-page">
+                  <h5>Go back to login page.&nbsp;<Link to="/Login" className="register-link">Login</Link></h5>
                 </div>
-                <div className="form-row register-form">
-                  <Link to="/Login" className="register-link">
-                    <button type="button" className="btn btn-primary mb-2 register-button">Login</button>
+                {/* <div className="form-row register-form">
+                  
+                    <button type="button" className="btn btn-primary mb-2 register-button"></button>
                   </Link>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>

@@ -26,12 +26,12 @@ class Reset extends Component {
 
   render() { 
     return ( 
-      <div className="container login">
+      <div className="container-fluid login">
         <div className="row">
-          <div className="col-md-6 col-xs-12">
+          <div className="col-md-4 offset-md-2 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-5 offset-md-1 col-xs-12">
+          <div className="col-md-4 offset-md-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row title-row">
@@ -58,13 +58,8 @@ class Reset extends Component {
                 <div className="form-row mb-5">
                   <button type="submit" className="btn btn-primary mb-2 login-button">reset password</button>
                 </div>
-                <div className="form-row mb-3">
-                  <h5>Go back to login page.</h5>
-                </div>
-                <div className="form-row register-form">
-                  <Link to="/Login" className="register-link">
-                    <button type="button" className="btn btn-primary mb-2 register-button">Login</button>
-                  </Link>
+                <div className="form-row my-5 go-to-login-page">
+                  <h5>Go back to login page.&nbsp;<Link to="/login">Login</Link></h5>
                 </div>
               </form>
             </div>
