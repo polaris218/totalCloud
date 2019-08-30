@@ -7,6 +7,10 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
+const passwordRegexp = RegExp(
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+);
+
 class SignupForm extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +24,9 @@ class SignupForm extends Component {
       privacyPolicy: true,
       emailValidate: true,
       agreeTermsOfServices: true,
+      passwordValidate: true,
+      signupFailed: false,
+      signupStage: false,
     }
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -35,7 +42,10 @@ class SignupForm extends Component {
   }
 
   handlePasswordChange(e) {
-    this.setState({ password: e.target.value });
+    this.setState({
+      password: e.target.value,
+      passwordValidate: passwordRegexp.test(e.target.value)
+    })
   }
 
   handleSubmit(e) {
@@ -43,31 +53,34 @@ class SignupForm extends Component {
     const { email, password, privacyPolicy } = this.state;
     if (emailRegex.test(email)) {
       if (privacyPolicy) {
+        this.setState({ signupStage: true });
         const firstName = email.split("@")[0];
         const lastName = firstName;
     
         const headers = {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Authorization": `SSWS ${process.env.REACT_APP_API_KEY}`,
+          "q": 0.01,
+          "User-Agent": "request",
         }
         fetch(`${process.env.REACT_APP_SIGNUP_URL}`, {
           method: "post",
           headers,
           body: JSON.stringify({
-            "profile": {
+            userProfile: {
+              email,
               firstName,
               lastName,
-              email,
-              login: email,
-            },
-            "credentials": {
-              "password": { 
-                "value": password
-              }
+              password,
             }
           })
-        }).then(res => console.log(res))
+        }).then(res => res.json())
+          .then(resp => {
+            this.setState({ signupStage: false })
+            if (resp.errorCauses) {
+              this.setState({ signupFailed: true });
+            }
+          })
       } else {
         this.setState({ agreeTermsOfServices: false})
       }
@@ -79,8 +92,10 @@ class SignupForm extends Component {
     const {
       showPassword,
       emailValidate,
-      agreeTermsOfServices,
       privacyPolicy,
+      passwordValidate,
+      signupFailed,
+      signupStage,
     } = this.state;
     return (
       <div className="container-fluid login">
@@ -100,7 +115,8 @@ class SignupForm extends Component {
                     className="form-control context-input"
                     placeholder="Email"
                     value={ this.state.email }
-                    onChange={this.handleEmailChange}
+                    onChange={ this.handleEmailChange }
+                    required
                   />
                   {!emailValidate && <small>Email is not valid</small>}
                 </div>
@@ -111,16 +127,28 @@ class SignupForm extends Component {
                     placeholder="Set Password"
                     autoComplete="off"
                     value={ this.state.password }
-                    onChange={this.handlePasswordChange}
+                    onChange={ this.handlePasswordChange }
+                    required
                   />
-                  <div id="show-password">
-                    <input 
-                      type="checkbox"
-                      value={ this.state.showPassword }
-                      onChange={() => this.setState({ showPassword: !this.state.showPassword })}
-                    />
+                    
+                </div>
+                {
+                  !passwordValidate &&
+                  <div className="password-hint">
+                    <small>must be included the special character</small>
+                    <small>must be included the uppercase</small>
+                    <small>must be included the lowercase</small>
+                    <small>must be included the number</small>
                   </div>
-                  <span>Show Password</span>
+                }
+                <div className="form-row agreements">
+                  <input 
+                    type="checkbox"
+                    className="form-check-input"
+                    value={ this.state.showPassword }
+                    onChange={() => this.setState({ showPassword: !this.state.showPassword })}
+                  />
+                  <span className="form-check-label">Show Password</span>
                 </div>
                 <div className="form-row agreements my-1">
                   <input
@@ -132,11 +160,17 @@ class SignupForm extends Component {
                   />
                   <span className="form-check-label text-white">
                     Subscribe to our blog & get AWS tips and tricks delivered right to your inbox.
-                  </span>  
+                  </span>
                 </div>
-                <div className="form-row mb-1 my-4">
-                  <button type="submit" className="btn btn-primary mb-2 login-button">Register</button>
+                <div className={`form-row my-4 ${!signupFailed && `mb-1`}`}>
+                  <button type="submit" className="btn btn-primary mb-2 login-button">
+                    { signupStage ? `Signning Up...`: `Sign Up`}
+                  </button>
                 </div>
+                { signupFailed &&
+                  <div className={ `form-row failed-message mb-5` }>
+                    <p>Signup Failed</p>
+                  </div> }
                 <div className="form-row awstipsform text-center">
                   <h6>
                     By clicking on "Sign Up", you agree to our Terms & acknowledge reading our&nbsp;
@@ -147,7 +181,7 @@ class SignupForm extends Component {
                 </div>
                 { !privacyPolicy &&
                     <div className="form-row service-content">
-                      <h6>Please agree of terms of services</h6>
+                      <h6>Please agree terms of services</h6>
                     </div>
                 }
                 <div className="form-row mb-5 my-3 have-account">

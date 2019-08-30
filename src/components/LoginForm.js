@@ -26,6 +26,7 @@ export default withAuth(class LoginForm extends Component {
       emailValidate: true,
       keepmelogin: false,
       passwordValidate: true,
+      loginStage: false,
     }
 
     this.oktaAuth = new OktaAuth({ url: props.baseUrl });
@@ -38,24 +39,30 @@ export default withAuth(class LoginForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     if (!emailRegex.test(this.state.email)) {
-      this.setState({ emailValidate: false })
+      this.setState({ loginStage: false })
     } else {
+      this.setState({ loginStage: true });
       this.oktaAuth.signIn({
         username: this.state.email,
         password: this.state.password
       })
-      .then(res => this.setState({
-        sessionToken: res.sessionToken
-      }))
+        .then(res => {
+          this.setState({
+            sessionToken: res.sessionToken,
+            loginStage: false,
+          });
+          localStorage.setItem("sessionToken", res.sessionToken);
+        }
+      )
       .catch(err => {
         this.setState({
           loginFailed: true,
+          loginStage: false,
           loginFailedMessage: "Login Failed",
         });
         console.log('Found an error', err);
       });
     }
-
   }
 
   handleEmailChange(e) {
@@ -79,8 +86,12 @@ export default withAuth(class LoginForm extends Component {
     const {
       loginFailed,
       loginFailedMessage,
-      emailValidate
+      emailValidate,
+      loginStage,
+      email,
+      password,
     } = this.state;
+
     return (
       <div className="container-fluid login">
         <div className="row">
@@ -127,7 +138,9 @@ export default withAuth(class LoginForm extends Component {
                   </div>
                 </div>
                 <div className={`form-row ${!loginFailed && `mb-5`}`}>
-                  <button type="submit" className="btn btn-primary mb-2 login-button">login</button>
+                  <button type="submit" className="btn btn-primary mb-2 login-button">
+                    { loginStage ? `Loggin In...`: `Login` }
+                  </button>
                 </div>
                 {
                   loginFailed &&

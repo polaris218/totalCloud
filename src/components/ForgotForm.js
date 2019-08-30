@@ -12,6 +12,8 @@ class ForgotForm extends Component {
     super(props);
     this.state = {
       email: "",
+      emailValidate: true,
+      clickedSendEmail: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -21,6 +23,7 @@ class ForgotForm extends Component {
     e.preventDefault();
     const { email } = this.state;
     if (email) {
+      this.setState({ clickedSendEmail: true })
       fetch(`${process.env.REACT_APP_FORGOT_PASSWORD_URL}`, {
         method: "post",
         headers: {
@@ -36,14 +39,17 @@ class ForgotForm extends Component {
   }
 
   handleEmailChange(e) {
-    if (emailRegex.test(e.target.value)) {
-      this.setState({ email: e.target.value, emailValidate: true})
-    } else {
-      this.setState({ email: e.target.value, emailValidate: false})
-    }
+    this.setState({
+      email: e.target.value,
+      emailValidate: emailRegex.test(e.target.value)
+    })
   }
 
   render() { 
+    const {
+      emailValidate,
+      clickedSendEmail
+    } = this.state;
     return ( 
       <div className="container-fluid login">
         <div className="row">
@@ -62,22 +68,21 @@ class ForgotForm extends Component {
                     className="form-control context-input"
                     placeholder="Enter New Password"
                     value={ this.state.email }
-                    onChange={this.handleEmailChange}
+                    onChange={ this.handleEmailChange }
+                    required
                   />
+                </div>
+                <div className="form-row email">
+                  <small>{ !emailValidate && `Email is not valid` }</small>
                 </div>
                 <div className="form-row mb-5">
                   <button type="submit" className="btn btn-primary mb-2 login-button">
-                    send reset password link
+                    {!clickedSendEmail ? `send reset password link`: `Resend`}
                   </button>
                 </div>
                 <div className="form-row go-to-login-page">
                   <h5>Go back to login page.&nbsp;<Link to="/Login" className="register-link">Login</Link></h5>
                 </div>
-                {/* <div className="form-row register-form">
-                  
-                    <button type="button" className="btn btn-primary mb-2 register-button"></button>
-                  </Link>
-                </div> */}
               </form>
             </div>
           </div>
