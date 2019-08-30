@@ -2,7 +2,7 @@ import React from 'react';
 
 import ForgotForm from "../components/ForgotForm";
 
-const Forgot = () => (
+const Forgot: React.FC = () => (
   <ForgotForm />
 )
 

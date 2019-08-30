@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { Link } from "react-router-dom";
 
 import Description from "./Description";
@@ -14,8 +14,27 @@ const passwordRegexp = RegExp(
 const errorsvg = `
 <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'><svg height="8" style="overflow:visible;enable-background:new 0 0 16 16" viewBox="0 0 16 16" width="16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g id="Error_1_"><g id="Error"><circle cx="16" cy="16" id="BG" r="16" style="fill:#D72828;"/><path d="M14.5,25h3v-3h-3V25z M14.5,6v13h3V6H14.5z" id="Exclamatory_x5F_Sign" style="fill:#E6E6E6;"/></g></g></g></svg>`
 
-class SignupForm extends Component {
-  constructor(props) {
+export interface SignupFormProps {
+
+}
+
+export interface SignupFormState {
+  email: string;
+  showPassword: boolean;
+  firstName: string;
+  lastName: string;
+  login: string;
+  password: string;
+  privacyPolicy: boolean;
+  emailValidate: boolean;
+  agreeTermsOfServices: boolean;
+  signupFailed: boolean;
+  signupStage: boolean;
+  passwordValidate: boolean;
+}
+
+class SignupForm extends Component<SignupFormProps, SignupFormState> {
+  constructor(props: SignupFormProps) {
     super(props);
     this.state = { 
       showPassword: false,
@@ -36,22 +55,21 @@ class SignupForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleEmailChange(e) {
-    if (emailRegex.test(e.target.value)) {
-      this.setState({ email: e.target.value, emailValidate: true})
-    } else {
-      this.setState({ email: e.target.value, emailValidate: false})
-    }
+  handleEmailChange(e: React.FormEvent<HTMLInputElement>): void {
+    this.setState({ 
+      email: e.currentTarget.value, 
+      emailValidate: emailRegex.test(e.currentTarget.value)}
+    )
   }
 
-  handlePasswordChange(e) {
+  handlePasswordChange(e: React.FormEvent<HTMLInputElement>): void {
     this.setState({
-      password: e.target.value,
-      passwordValidate: passwordRegexp.test(e.target.value)
+      password: e.currentTarget.value,
+      passwordValidate: passwordRegexp.test(e.currentTarget.value)
     })
   }
 
-  handleSubmit(e) {
+  handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     const { email, password, privacyPolicy } = this.state;
     if (emailRegex.test(email)) {
@@ -59,13 +77,13 @@ class SignupForm extends Component {
         this.setState({ signupStage: true });
         const firstName = email.split("@")[0];
         const lastName = firstName;
-    
-        const headers = {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "q": 0.01,
-          "User-Agent": "request",
-        }
+
+        const headers: HeadersInit = new Headers();
+        headers.append("Accept", "application/json");
+        headers.append("Content-Type", "application/json");
+        headers.append("q", "0.01");
+        headers.append("User-Agent", "request");
+
         fetch(`${process.env.REACT_APP_SIGNUP_URL}`, {
           method: "post",
           headers,
@@ -100,6 +118,7 @@ class SignupForm extends Component {
       signupFailed,
       signupStage,
     } = this.state;
+
     return (
       <div className="container-fluid login">
         <div className="row">
@@ -163,8 +182,9 @@ class SignupForm extends Component {
                   <input 
                     type="checkbox"
                     className="form-check-input"
-                    value={ this.state.showPassword }
-                    onChange={() => this.setState({ showPassword: !this.state.showPassword })}
+                    checked={showPassword}
+                    // value={ showPassword }
+                    onChange={(e) => this.setState({ showPassword: e.currentTarget.checked })}
                   />
                   <span className="form-check-label">Show Password</span>
                 </div>
@@ -172,9 +192,9 @@ class SignupForm extends Component {
                   <input
                     type="checkbox"
                     className="form-check-input"
-                    value={ this.state.privacyPolicy }
-                    onChange={ () => this.setState({ privacyPolicy: !this.state.privacyPolicy }) }
-                    defaultChecked
+                    // value={ this.state.privacyPolicy }
+                    checked={privacyPolicy}
+                    onChange={ (e) => this.setState({ privacyPolicy: e.currentTarget.checked }) }
                   />
                   <span className="form-check-label text-white">
                     Subscribe to our blog & get AWS tips and tricks delivered right to your inbox.

@@ -10,8 +10,17 @@ const emailRegex = RegExp(
 const style = {
   minHeight: `600px`,
 }
-class ForgotForm extends Component {
-  constructor(props) {
+
+interface Props {
+
+}
+interface State {
+  email?: string;
+  emailValidate?: boolean;
+  clickedSendEmail?: boolean;
+}
+class ForgotForm extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       email: "",
@@ -22,7 +31,7 @@ class ForgotForm extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
-  handleSubmit(e) {
+  handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     const { email } = this.state;
     if (email) {
@@ -41,10 +50,10 @@ class ForgotForm extends Component {
     }
   }
 
-  handleEmailChange(e) {
+  handleEmailChange(e: React.FormEvent<HTMLInputElement>): void {
     this.setState({
-      email: e.target.value,
-      emailValidate: emailRegex.test(e.target.value)
+      email: e.currentTarget.value,
+      emailValidate: emailRegex.test(e.currentTarget.value)
     })
   }
 

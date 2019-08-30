@@ -2,7 +2,7 @@ import React from 'react';
 
 import ResetForm from "../components/ResetForm";
 
-const Reset = () => (
+const Reset: React.FC = () => (
   <ResetForm />
 )
 

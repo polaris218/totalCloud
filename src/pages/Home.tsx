@@ -4,8 +4,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withAuth } from '@okta/okta-react';
 
-export default withAuth(class Home extends Component {
-  constructor(props) {
+interface Props {
+  auth?: any;
+}
+
+interface State {
+  authenticated?: any;
+}
+
+export default withAuth(class Home extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { authenticated: null };
     this.checkAuthentication = this.checkAuthentication.bind(this);
