@@ -3,25 +3,37 @@ import { Link } from "react-router-dom";
 
 import Description from "./Description";
 
-class Reset extends Component {
-  constructor(props) {
+interface Props {
+
+}
+
+interface State {
+  newPassword?: string;
+  confirmPassword?: string;
+}
+
+class Reset extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
-    this.state = {}
+    this.state = {
+      newPassword: "",
+      confirmPassword: "",
+    }
     this.handleNewPassword = this.handleNewPassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
   }
 
-  handleNewPassword(e) {
-
+  handleNewPassword(e: React.FormEvent<HTMLInputElement>): void {
+    this.setState({ newPassword: e.currentTarget.value})
   }
 
-  handleSubmit(e) {
-
+  handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
   }
 
-  handleConfirmPassword(e) {
-
+  handleConfirmPassword(e: React.FormEvent<HTMLInputElement>): void {
+    this.setState({ confirmPassword: e.currentTarget.value})
   }
 
   render() { 
@@ -42,8 +54,8 @@ class Reset extends Component {
                     type="password"
                     className="form-control context-input"
                     placeholder="Enter New Password"
-                    value={ this.state.email }
-                    onChange={this.handleEmailChange}
+                    value={ this.state.newPassword }
+                    onChange={this.handleNewPassword}
                   />
                 </div>
                 <div className="form-row my-3">
@@ -51,8 +63,8 @@ class Reset extends Component {
                     type="password"
                     className="form-control context-input"
                     placeholder="Confirm New Password"
-                    value={ this.state.password }
-                    onChange={this.handlePasswordChange}
+                    value={ this.state.confirmPassword }
+                    onChange={this.handleConfirmPassword}
                   />
                 </div>
                 <div className="form-row mb-5">

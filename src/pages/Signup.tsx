@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 
 import SignupForm from "../components/SignupForm";
 
-class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {  }
-  }
+export interface SignupProps {
+
+}
+
+export interface SignupState {
+
+}
+
+class Signup extends Component<SignupProps, SignupState> {
   render() { 
     return ( 
       <SignupForm />

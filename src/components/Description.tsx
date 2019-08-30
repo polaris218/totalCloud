@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from "../assets/images/totalcloud.png";
 import Group from "../assets/images/group.png";
 
-const Description = () => (
+const Description: React.FC = () => (
   <div className="row description">
     <img src={ Logo } alt="Logo" />
     <h3>

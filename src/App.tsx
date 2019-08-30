@@ -10,11 +10,11 @@ import Forgot from "./pages/Forgot";
 import Protected from "./pages/Protected";
 import './App.css';
 
-function onAuthRequired({ history }) {
+const onAuthRequired: any = ({ history }: any) => {
   history.push('/login');
 }
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <Security

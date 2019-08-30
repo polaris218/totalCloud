@@ -4,23 +4,40 @@ import { Link } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
 
 import Description from "./Description";
+import { string, bool, any } from 'prop-types';
 
-const emailRegex = RegExp(
+const emailRegex = new RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-const passwordRegexp = RegExp(
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-)
+interface LoginFormProps {
+  baseUrl?: string;
+  auth?: any;
+}
 
-export default withAuth(class LoginForm extends Component {
-  constructor(props) {
+interface LoginFormState {
+  sessionToken: string ;
+  email?: string;
+  password?: string;
+  loginFailed?: boolean;
+  loginFailedMessage?: string;
+  emailValidate?: boolean;
+  keepmelogin?: boolean;
+  passwordValidate?: boolean;
+  loginStage?: boolean;
+}
+
+/**
+ * @see https://www.thepolyglotdeveloper.com/2016/05/add-type-definitions-external-javascript-library-typescript/
+ */
+export default withAuth(class LoginForm extends Component<LoginFormProps, LoginFormState> {
+  oktaAuth: any;
+  constructor(props: LoginFormProps) {
     super(props);
     this.state = {
-      sessionToken: null,
+      sessionToken: "",
       email: '',
       password: '',
-      error: null,
       loginFailed: false,
       loginFailedMessage: "",
       emailValidate: true,
@@ -36,17 +53,21 @@ export default withAuth(class LoginForm extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
-  handleSubmit(e) {
+  handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    if (!emailRegex.test(this.state.email)) {
+    const {
+      email, 
+      password
+    } = this.state;
+
+    if (!emailRegex.test(String(email))) {
       this.setState({ loginStage: false })
     } else {
       this.setState({ loginStage: true });
       this.oktaAuth.signIn({
-        username: this.state.email,
-        password: this.state.password
-      })
-        .then(res => {
+        username: email,
+        password: password
+      }).then((res: any) => {
           this.setState({
             sessionToken: res.sessionToken,
             loginStage: false,
@@ -54,7 +75,7 @@ export default withAuth(class LoginForm extends Component {
           localStorage.setItem("sessionToken", res.sessionToken);
         }
       )
-      .catch(err => {
+      .catch((err: any) => {
         this.setState({
           loginFailed: true,
           loginStage: false,
@@ -65,16 +86,14 @@ export default withAuth(class LoginForm extends Component {
     }
   }
 
-  handleEmailChange(e) {
-    if (emailRegex.test(e.target.value)) {
-      this.setState({ email: e.target.value, emailValidate: true})
-    } else {
-      this.setState({ email: e.target.value, emailValidate: false})
-    }
+  handleEmailChange(e: React.FormEvent<HTMLInputElement>) {
+    this.setState({ 
+      email: e.currentTarget.value, 
+      emailValidate: emailRegex.test(e.currentTarget.value)})
   }
 
-  handlePasswordChange(e) {
-    this.setState({ password: e.target.value });
+  handlePasswordChange(e: React.FormEvent<HTMLInputElement>) {
+    this.setState({ password: e.currentTarget.value });
     
   }
 
@@ -90,6 +109,7 @@ export default withAuth(class LoginForm extends Component {
       loginStage,
       email,
       password,
+      keepmelogin
     } = this.state;
 
     return (
@@ -131,8 +151,9 @@ export default withAuth(class LoginForm extends Component {
                     <input 
                       type="checkbox"
                       className="form-check-input"
-                      value={ this.state.keepmelogin }
-                      onChange={ () => this.setState({ keepmelogin: !this.state.keepmelogin }) }
+                      // value={ this.state.keepmelogin }
+                      checked={keepmelogin}
+                      onChange={ (e) => this.setState({ keepmelogin: e.currentTarget.checked }) }
                     />
                     <label className="form-check-label text-white">Keep me logged in</label>
                   </div>
