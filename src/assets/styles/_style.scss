@@ -106,9 +106,14 @@ $background_color: #2F5BEA;
       }
     }
     .password-hint {
+      margin-left: -10px;
       small {
-        display: grid;
+        display: inline-flex;
         color: red;
+        span {
+          margin-left: 10px;
+          margin-top: 4px;
+        }
       }
     }
     .email {

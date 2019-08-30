@@ -11,6 +11,9 @@ const passwordRegexp = RegExp(
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
 );
 
+const errorsvg = `
+<?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'><svg height="8" style="overflow:visible;enable-background:new 0 0 16 16" viewBox="0 0 16 16" width="16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g id="Error_1_"><g id="Error"><circle cx="16" cy="16" id="BG" r="16" style="fill:#D72828;"/><path d="M14.5,25h3v-3h-3V25z M14.5,6v13h3V6H14.5z" id="Exclamatory_x5F_Sign" style="fill:#E6E6E6;"/></g></g></g></svg>`
+
 class SignupForm extends Component {
   constructor(props) {
     super(props);
@@ -100,10 +103,10 @@ class SignupForm extends Component {
     return (
       <div className="container-fluid login">
         <div className="row">
-          <div className="col-md-4 offset-md-2 col-xs-12">
+          <div className="col-lg-4 offset-lg-2 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-4 offset-md-1 col-xs-12">
+          <div className="col-lg-4 offset-lg-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row title-row">
@@ -135,10 +138,29 @@ class SignupForm extends Component {
                 {
                   !passwordValidate &&
                   <div className="password-hint">
-                    <small>must be included the special character</small>
-                    <small>must be included the uppercase</small>
-                    <small>must be included the lowercase</small>
-                    <small>must be included the number</small>
+                    <small>
+                      <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
+                      <span>At least 8 character(s)</span>
+                    </small>
+                    <br />
+                    <small>
+                      <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
+                      <span>At least 1 number(s)</span>
+                    </small>
+                    <br />
+                    <small>
+                      <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
+                      <span>At least 1 lowercase letter(s)</span>
+                    </small>
+                    <br />
+                    <small>
+                      <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
+                      <span>At least 1 uppercase letter(s)</span>
+                    </small>
+                    {/* <small>
+                      <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
+                      <span>Does not contain part of username</span>
+                    </small> */}
                   </div>
                 }
                 <div className="form-row agreements">
