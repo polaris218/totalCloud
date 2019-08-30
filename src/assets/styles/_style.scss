@@ -8,8 +8,13 @@ $background_color: #2F5BEA;
   width: 17px;
   height: 17px;
   &:checked {
-    background: rgba(40, 40, 40, 1.0);
-    
+    background: $background_color;
+  }
+  &:checked:after {
+    content: "\2714";
+    position: absolute;
+    outline: none;
+    color: #1c2125;
   }
 }
 .login {

@@ -157,10 +157,6 @@ class SignupForm extends Component {
                       <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
                       <span>At least 1 uppercase letter(s)</span>
                     </small>
-                    {/* <small>
-                      <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
-                      <span>Does not contain part of username</span>
-                    </small> */}
                   </div>
                 }
                 <div className="form-row agreements">
