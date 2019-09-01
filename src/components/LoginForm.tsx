@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
 
 import Description from "./Description";
-import { string, bool, any } from 'prop-types';
 
 const emailRegex = new RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -30,6 +29,11 @@ interface LoginFormState {
 /**
  * @see https://www.thepolyglotdeveloper.com/2016/05/add-type-definitions-external-javascript-library-typescript/
  */
+const style = {
+  width: "80%",
+  margin: "auto",
+}
+
 export default withAuth(class LoginForm extends Component<LoginFormProps, LoginFormState> {
   oktaAuth: any;
   constructor(props: LoginFormProps) {
@@ -114,11 +118,11 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
 
     return (
       <div className="container-fluid login">
-        <div className="row">
-          <div className="col-md-4 offset-2 col-xs-12">
+        <div className="row" style={style}>
+          <div className="col-lg-5 offset-lg-1 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-4 offset-md-1 col-xs-12">
+          <div className="col-lg-4 offset-lg-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
                 <div className="form-row my-2 title-row">
@@ -129,7 +133,7 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
                     type="Email"
                     className="form-control context-input"
                     placeholder="Email"
-                    value={ this.state.email }
+                    value={ email }
                     onChange={this.handleEmailChange}
                   />
                   {!emailValidate && <small>Email is not valid</small>}
@@ -139,7 +143,7 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
                     type="password"
                     className="form-control context-input"
                     placeholder="Password"
-                    value={ this.state.password }
+                    value={ password }
                     onChange={this.handlePasswordChange}
                   />
                   <Link to="/forgotpassword" className="forgot-link">

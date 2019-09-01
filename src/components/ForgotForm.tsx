@@ -10,7 +10,10 @@ const emailRegex = RegExp(
 const style = {
   minHeight: `600px`,
 }
-
+const rowStyle = {
+  width: "80%",
+  margin: "auto",
+}
 interface Props {
 
 }
@@ -64,11 +67,11 @@ class ForgotForm extends Component<Props, State> {
     } = this.state;
     return ( 
       <div className="container-fluid login">
-        <div className="row">
-          <div className="col-md-4 offset-md-2 col-xs-12">
+        <div className="row" style={rowStyle}>
+          <div className="col-lg-5 offset-lg-1 col-xs-12">
             <Description />
           </div>
-          <div className="col-md-4 offset-md-1">
+          <div className="col-lg-4 offset-lg-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit } style={style}>
                 <div className="form-row title-row">
