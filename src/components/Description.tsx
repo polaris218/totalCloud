@@ -1,19 +1,22 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import Logo from "../assets/images/totalcloud.png";
 import Group from "../assets/images/group.png";
 
 const Description: React.FC = () => (
   <div className="row description">
-    <img src={ Logo } alt="Logo" />
+    <Link to="/">
+      <img src={ Logo } alt="Logo" />
+    </Link>
     <h3>
       A single tool to automate every AWS resource, the way you want.
     </h3>
     <ul>
       {
         [
-          `Hassle-free AWS automation to flexibly manage your cloud.`,
           `No need to integrate multiple tools`,
-          `Create powerful workflows or simply pick from a wide range of predefined workflows.`,
+          `Create completely customized workflows or pick from a wide range of 80+ templates`,
+          `Pick from read-only or actionable workflow to drive efficiency`,
           `Eliminate the need for code by using predefined nodes to achieve any use case`
         ].map((item, key) => (
           <li key={ key }>
@@ -24,7 +27,7 @@ const Description: React.FC = () => (
         ))
       }
     </ul>
-    <img src={ Group } alt="Group" />
+    <img src={ Group } className="group" alt="Group" />
   </div>
 )
 

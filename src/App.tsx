@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 
 import Login from "./pages/Login";

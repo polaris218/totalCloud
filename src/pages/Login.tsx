@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import { withAuth } from '@okta/okta-react';
-import { string } from 'prop-types';
 
 interface LoginProps {
   baseUrl?: string;

@@ -33,6 +33,11 @@ export interface SignupFormState {
   passwordValidate: boolean;
 }
 
+const style = {
+  width: "80%",
+  margin: "auto",
+}
+
 class SignupForm extends Component<SignupFormProps, SignupFormState> {
   constructor(props: SignupFormProps) {
     super(props);
@@ -121,109 +126,114 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
 
     return (
       <div className="container-fluid login">
-        <div className="row">
-          <div className="col-lg-4 offset-lg-2 col-xs-12">
+        <div className="row" style={style}>
+          <div className="col-lg-5 offset-lg-1 col-xs-12">
             <Description />
           </div>
           <div className="col-lg-4 offset-lg-1 col-xs-12">
             <div className="row login-form">
               <form onSubmit={ this.handleSubmit }>
-                <div className="form-row title-row">
-                  <h3>Register For Free</h3>
-                </div>
-                <div className="form-row my-3 email">
-                  <input
-                    type="Email"
-                    className="form-control context-input"
-                    placeholder="Email"
-                    value={ this.state.email }
-                    onChange={ this.handleEmailChange }
-                    required
-                  />
-                  {!emailValidate && <small>Email is not valid</small>}
-                </div>
-                <div className="form-row my-3 password">
-                  <input
-                    type={showPassword ? `textfield`: `password`}
-                    className="form-control context-input"
-                    placeholder="Set Password"
-                    autoComplete="off"
-                    value={ this.state.password }
-                    onChange={ this.handlePasswordChange }
-                    required
-                  />
-                    
-                </div>
-                {
-                  !passwordValidate &&
-                  <div className="password-hint">
+                <div className="form-group">
+                  <div className="form-row title-row text-center">
+                    <h4>Set-up TotalCloud to save engineering costs & time</h4>
+                  </div>
+                  <div className="form-row my-3 email">
+                    <input
+                      type="Email"
+                      className="form-control context-input"
+                      placeholder="Email"
+                      value={ this.state.email }
+                      onChange={ this.handleEmailChange }
+                      required
+                    />
+                    {!emailValidate && <small>Email is not valid</small>}
+                  </div>
+                  <div className="form-row my-3 password">
+                    <input
+                      type={showPassword ? `textfield`: `password`}
+                      className="form-control context-input"
+                      placeholder="Set Password"
+                      autoComplete="off"
+                      value={ this.state.password }
+                      onChange={ this.handlePasswordChange }
+                      required
+                    />
+
+                  </div>
+                  {
+                    !passwordValidate &&
+                    <div className="password-hint">
+                      <small>
+                        <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
+                        <span>At least 8 character(s)</span>
+                      </small>
+                      <br />
+                      <small>
+                        <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
+                        <span>At least 1 number(s)</span>
+                      </small>
+                      <br />
+                      <small>
+                        <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
+                        <span>At least 1 lowercase letter(s)</span>
+                      </small>
+                      <br />
+                      <small>
+                        <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
+                        <span>At least 1 uppercase letter(s)</span>
+                      </small>
+                    </div>
+                  }
+                  <div className="form-row agreements">
+                    <input 
+                      type="checkbox"
+                      className="form-check-input"
+                      checked={showPassword}
+                      // value={ showPassword }
+                      onChange={(e) => this.setState({ showPassword: e.currentTarget.checked })}
+                    />
+                    <span className="form-check-label">Show Password</span>
+                  </div>
+                  <div className="form-row agreements my-1">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      // value={ this.state.privacyPolicy }
+                      checked={privacyPolicy}
+                      onChange={ (e) => this.setState({ privacyPolicy: e.currentTarget.checked }) }
+                    />
+                    <span className="form-check-label text-white">
+                      Get AWS tips and tricks delivered right to your inbox.
+                    </span>
+                  </div>
+                  <div className={`form-row my-4 ${!signupFailed && `mb-1`}`}>
+                    <button type="submit" className="btn btn-primary mb-2 login-button">
+                      { signupStage ? `Signning Up...`: `Sign Up`}
+                    </button>
+                  </div>
+                  { 
+                    signupFailed &&
+                    <div className={ `form-row failed-message mb-5` }>
+                      <p>Signup Failed</p>
+                    </div> 
+                  }
+                  <div className="form-row awstipsform text-center">
                     <small>
-                      <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
-                      <span>At least 8 character(s)</span>
-                    </small>
-                    <br />
-                    <small>
-                      <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
-                      <span>At least 1 number(s)</span>
-                    </small>
-                    <br />
-                    <small>
-                      <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
-                      <span>At least 1 lowercase letter(s)</span>
-                    </small>
-                    <br />
-                    <small>
-                      <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
-                      <span>At least 1 uppercase letter(s)</span>
+                      By clicking on "Sign Up", you agree to our Terms & acknowledge reading our&nbsp;
+                      <Link to="/privacy">
+                        Privacy Policy
+                      </Link>
                     </small>
                   </div>
-                }
-                <div className="form-row agreements">
-                  <input 
-                    type="checkbox"
-                    className="form-check-input"
-                    checked={showPassword}
-                    // value={ showPassword }
-                    onChange={(e) => this.setState({ showPassword: e.currentTarget.checked })}
-                  />
-                  <span className="form-check-label">Show Password</span>
-                </div>
-                <div className="form-row agreements my-1">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    // value={ this.state.privacyPolicy }
-                    checked={privacyPolicy}
-                    onChange={ (e) => this.setState({ privacyPolicy: e.currentTarget.checked }) }
-                  />
-                  <span className="form-check-label text-white">
-                    Subscribe to our blog & get AWS tips and tricks delivered right to your inbox.
-                  </span>
-                </div>
-                <div className={`form-row my-4 ${!signupFailed && `mb-1`}`}>
-                  <button type="submit" className="btn btn-primary mb-2 login-button">
-                    { signupStage ? `Signning Up...`: `Sign Up`}
-                  </button>
-                </div>
-                { signupFailed &&
-                  <div className={ `form-row failed-message mb-5` }>
-                    <p>Signup Failed</p>
-                  </div> }
-                <div className="form-row awstipsform text-center">
-                  <h6>
-                    By clicking on "Sign Up", you agree to our Terms & acknowledge reading our&nbsp;
-                    <Link to="/privacy">
-                      Privacy Policy
-                    </Link>
-                  </h6>
-                </div>
-                { !privacyPolicy &&
+                  { 
+                  !privacyPolicy &&
                     <div className="form-row service-content">
-                      <h6>Please agree terms of services</h6>
+                      <h6>Please agree our terms of services</h6>
                     </div>
-                }
-                <div className="form-row mb-5 my-3 have-account">
-                  <h6>Already have an account?<Link to="/login">Login</Link></h6>
+                  }
+                  <div className="form-row mb-5 my-3 have-account text-center">
+                    <h6>Already have an account?<Link to="/login">Login</Link></h6>
+                  </div>
                 </div>
               </form>
             </div>

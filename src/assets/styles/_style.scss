@@ -1,4 +1,4 @@
-$background_color: #2F5BEA;
+$background_color: #3579DC;
 @mixin checkbox {
   background: rgba(40, 40, 40, 0.2);
   appearance: none;
@@ -18,19 +18,19 @@ $background_color: #2F5BEA;
   }
 }
 .login {
-  margin-top: 10%;
+  margin-top: 5%;
   .login-form {
     margin-top: 10%;
+    // width: 90%;
     background: $background_color;
     box-shadow: 0 7px 30px 0 rgba(0,0,0,0.61);
-    margin-left: 30px;
     min-height: 635px;
     form {
       font-family: "Proxima Nova Light";
       margin: auto;
-      width: 70%;
+      width: 75%;
     }
-    h5, h6, h3 {
+    h5, h6, h3, h4 {
       color: #fff;
       margin: auto;
     }
@@ -51,6 +51,10 @@ $background_color: #2F5BEA;
     }
     .title-row {
       padding-top: 30%;
+      margin-bottom: 25px;
+      h4 {
+        width: 70%;
+      }
     }
     .failed-message{
       p {
@@ -135,6 +139,7 @@ $background_color: #2F5BEA;
         color: #fff;
         margin-left: 10px;
         font-weight: 100;
+        font-size: 90%;
       }
     }
     .keepmelogin {
@@ -152,7 +157,7 @@ $background_color: #2F5BEA;
       input {
         @include checkbox();
       }
-      label {
+      label, small {
         color: #fff;
         margin-left: 10px;
         font-weight: 100;
@@ -200,10 +205,10 @@ $background_color: #2F5BEA;
       }
     }
     @media screen and (max-width: 1201px) {
-      margin-top: 30%;
+      // margin-top: 30%;
     }
     @media screen and (max-width: 992px){
-      margin-top: 60%;
+      // margin-top: 60%;
     }
     @media screen and (max-width: 768px){
       margin-top: 5%;
