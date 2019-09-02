@@ -7,11 +7,12 @@ $background_color: #3579DC;
   border-radius: 4px;
   width: 17px;
   height: 17px;
+  cursor: pointer;
   &:checked {
     background: $background_color;
   }
   &:checked:after {
-    content: "\2714";
+    content: "";
     position: absolute;
     outline: none;
     color: #1c2125;
@@ -131,9 +132,12 @@ $background_color: #3579DC;
       }
     }
     .agreements {
-      margin-left: 15px;
+      // margin-left: 15px;
       input {
         @include checkbox();
+      }
+      small {
+        margin-left: 10px;
       }
       span {
         color: #fff;
@@ -142,13 +146,19 @@ $background_color: #3579DC;
         font-size: 90%;
       }
     }
+    .password-view {
+      width: 24px;
+      position: absolute;
+      right: 10px;
+      top: 6px;
+    }
     .keepmelogin {
       input {
         @include checkbox();
       }
-      label {
+      span {
         color: #fff;
-        margin-left: 5px;
+        margin-left: 10px;
         font-weight: 100;
       }
       padding-bottom: 5%;

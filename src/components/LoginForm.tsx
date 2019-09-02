@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { withAuth } from '@okta/okta-react';
 
 import Description from "./Description";
+import BallotImage from "../assets/images/ballot-check.png";
+import BallotImageUncheck from "../assets/images/ballot-uncheck.png";
 
 const emailRegex = new RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -151,15 +153,18 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
                   </Link>
                 </div>
                 <div className="form-row keepmelogin">
-                  <div className="form-check">
-                    <input 
-                      type="checkbox"
-                      className="form-check-input"
-                      // value={ this.state.keepmelogin }
-                      checked={keepmelogin}
-                      onChange={ (e) => this.setState({ keepmelogin: e.currentTarget.checked }) }
-                    />
-                    <label className="form-check-label text-white">Keep me logged in</label>
+                  <div>
+                    {keepmelogin   
+                      ? <img 
+                          src={BallotImage} width="20px" 
+                          onClick={() => this.setState({ keepmelogin: !this.state.keepmelogin})}
+                        />
+                      : <img 
+                          src={BallotImageUncheck} width="20px"
+                          onClick={() => this.setState({ keepmelogin: !this.state.keepmelogin})}
+                        />
+                    }
+                    <span className="text-white">Keep me logged in</span>
                   </div>
                 </div>
                 <div className={`form-row ${!loginFailed && `mb-5`}`}>
