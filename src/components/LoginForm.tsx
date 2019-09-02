@@ -94,12 +94,16 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
 
   handleEmailChange(e: React.FormEvent<HTMLInputElement>) {
     this.setState({ 
-      email: e.currentTarget.value, 
+      email: e.currentTarget.value,
+      loginFailed: false,
       emailValidate: emailRegex.test(e.currentTarget.value)})
   }
 
   handlePasswordChange(e: React.FormEvent<HTMLInputElement>) {
-    this.setState({ password: e.currentTarget.value });
+    this.setState({ 
+      password: e.currentTarget.value,
+      loginFailed: false,
+    });
     
   }
 
