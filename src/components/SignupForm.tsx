@@ -323,7 +323,7 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                         <div dangerouslySetInnerHTML={ { __html: !is1LowerCases ? errorsvg: ticksvg } } />
                         <span>At least 1 lowercase letter(s)</span>
                       </small>
-                      
+                      <br />
                       <small className={!is1UpperCases ? `error`: `valid`}>
                         <div dangerouslySetInnerHTML={ { __html: !is1UpperCases ? errorsvg: ticksvg } } />
                         <span>At least 1 uppercase letter(s)</span>
