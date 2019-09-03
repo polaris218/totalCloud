@@ -14,6 +14,7 @@ const rowStyle = {
   width: "80%",
   margin: "auto",
 }
+
 interface Props {
 
 }
@@ -22,6 +23,7 @@ interface State {
   emailValidate?: boolean;
   clickedSendEmail?: boolean;
 }
+
 class ForgotForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);

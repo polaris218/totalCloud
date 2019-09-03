@@ -162,10 +162,12 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
                       ? <img 
                           src={BallotImage} width="20px" 
                           onClick={() => this.setState({ keepmelogin: !this.state.keepmelogin})}
+                          alt="checkmark"
                         />
                       : <img 
                           src={BallotImageUncheck} width="20px"
                           onClick={() => this.setState({ keepmelogin: !this.state.keepmelogin})}
+                          alt="checkmark"
                         />
                     }
                     <span className="text-white">Keep me logged in</span>

@@ -117,9 +117,17 @@ $background_color: #3579DC;
     }
     .password-hint {
       margin-left: -10px;
-      small {
+      .error {
         display: inline-flex;
         color: red;
+        span {
+          margin-left: 10px;
+          margin-top: 4px;
+        }
+      }
+      .valid {
+        display: inline-flex;
+        color: white;
         span {
           margin-left: 10px;
           margin-top: 4px;

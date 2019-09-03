@@ -9,10 +9,6 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-const passwordRegexp = RegExp(
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-);
-
 const errorsvg = `
 <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'><svg height="8" style="overflow:visible;enable-background:new 0 0 16 16" viewBox="0 0 16 16" width="16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g id="Error_1_"><g id="Error"><circle cx="16" cy="16" id="BG" r="16" style="fill:#D72828;"/><path d="M14.5,25h3v-3h-3V25z M14.5,6v13h3V6H14.5z" id="Exclamatory_x5F_Sign" style="fill:#E6E6E6;"/></g></g></g></svg>`
 
@@ -61,6 +57,15 @@ const showsvg = `
 <g>
 </g>
 </svg>
+`
+const ticksvg = `
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" version="1.1" width="16" height="16" fill="#000000">
+  <g id="surface1">
+    <path style=" fill:#fff;" d="M 22.59375 3.5 L 8.0625 18.1875 L 1.40625 11.5625 L 0 13 L 8.0625 21 L 24 4.9375 Z "/>
+  </g>
+</svg>
+
 `
 
 const hidesvg = `
@@ -137,6 +142,11 @@ export interface SignupFormState {
   signupFailed: boolean;
   signupStage: boolean;
   passwordValidate: boolean;
+  is8Characters: boolean;
+  is1Numbers: boolean;
+  is1LowerCases: boolean;
+  is1UpperCases: boolean;
+  isPasswordContainsName: boolean;
 }
 
 const style = {
@@ -160,6 +170,11 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       passwordValidate: true,
       signupFailed: false,
       signupStage: false,
+      is8Characters: false,
+      is1Numbers: false,
+      is1LowerCases: false,
+      is1UpperCases: false,
+      isPasswordContainsName: false,
     }
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -174,10 +189,24 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
   }
 
   handlePasswordChange(e: React.FormEvent<HTMLInputElement>): void {
+    const { email } = this.state;
+
+    const password = e.currentTarget.value;
+    const is1UpperCases = (/[A-Z]/).test(password);
+    const is1Numbers = (/[0-9]/).test(password);
+    const is1LowerCases = (/[a-z]/).test(password);
+    const is8Characters = password.length > 7 ? true : false;
+    const isPasswordContainsName = email.indexOf(password) === -1 ? false: true;
+
     this.setState({
-      password: e.currentTarget.value,
-      passwordValidate: passwordRegexp.test(e.currentTarget.value)
-    })
+      password, 
+      is1UpperCases, 
+      is1Numbers, 
+      is1LowerCases, 
+      is8Characters,
+      isPasswordContainsName,
+      passwordValidate: is1UpperCases && is1Numbers && is1LowerCases && is8Characters && isPasswordContainsName
+    });
   }
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
@@ -228,6 +257,11 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       passwordValidate,
       signupFailed,
       signupStage,
+      is1LowerCases,
+      is1UpperCases,
+      is8Characters,
+      isPasswordContainsName,
+      is1Numbers,
     } = this.state;
 
     return (
@@ -270,37 +304,34 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                       dangerouslySetInnerHTML={{ __html: showPassword ? showsvg: hidesvg }}
                       onClick={() => this.setState({ showPassword: !showPassword})}
                     >
-                      {/* <input 
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={showPassword}
-                        // value={ showPassword }
-                        onChange={(e) => this.setState({ showPassword: e.currentTarget.checked })}
-                      />
-                      <span className="form-check-label">Show Password</span> */}
                     </div>
                   </div>
                   {
                     !passwordValidate &&
                     <div className="password-hint">
-                      <small>
-                        <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
+                      <small className={!is8Characters ? `error`: `valid`}>
+                        <div dangerouslySetInnerHTML={ { __html: !is8Characters ? errorsvg: ticksvg } }></div>
                         <span>At least 8 character(s)</span>
                       </small>
                       <br />
-                      <small>
-                        <div dangerouslySetInnerHTML={ { __html: errorsvg } }></div>
+                      <small className={!is1Numbers ? `error`: `valid`}>
+                        <div dangerouslySetInnerHTML={ { __html: !is1Numbers ? errorsvg: ticksvg } }></div>
                         <span>At least 1 number(s)</span>
                       </small>
                       <br />
-                      <small>
-                        <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
+                      <small className={!is1LowerCases ? `error`: `valid`}>
+                        <div dangerouslySetInnerHTML={ { __html: !is1LowerCases ? errorsvg: ticksvg } } />
                         <span>At least 1 lowercase letter(s)</span>
                       </small>
-                      <br />
-                      <small>
-                        <div dangerouslySetInnerHTML={ { __html: errorsvg } } />
+                      
+                      <small className={!is1UpperCases ? `error`: `valid`}>
+                        <div dangerouslySetInnerHTML={ { __html: !is1UpperCases ? errorsvg: ticksvg } } />
                         <span>At least 1 uppercase letter(s)</span>
+                      </small>
+                      <br />
+                      <small className={isPasswordContainsName ? `error`: `valid`}>
+                        <div dangerouslySetInnerHTML={ { __html: isPasswordContainsName ? errorsvg: ticksvg } } />
+                        <span>Does not contain part of username</span>
                       </small>
                     </div>
                   }
@@ -310,10 +341,12 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                         ? <img 
                             src={BallotImage} width="20px" 
                             onClick={() => this.setState({ privacyPolicy: !this.state.privacyPolicy})}
+                            alt="checkmark"
                           />
                         : <img 
                             src={BallotImageUncheck} width="20px"
                             onClick={() => this.setState({ privacyPolicy: !this.state.privacyPolicy})}
+                            alt="checkmark"
                           />
                       }
                       <small className="text-white">Get AWS tips and tricks delivered right to your inbox.</small>
