@@ -1,5 +1,5 @@
 import React, { Component, FormEvent } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import Description from "./Description";
 import BallotImage from "../assets/images/ballot-check.png";
@@ -126,7 +126,7 @@ const hidesvg = `
   </svg>
 `
 export interface SignupFormProps {
-
+  history?: any;
 }
 
 export interface SignupFormState {
@@ -148,6 +148,8 @@ export interface SignupFormState {
   is1UpperCases: boolean;
   isPasswordContainsName: boolean;
   signupFailedMessage: string;
+  submitted: boolean;
+  signupSuccess: boolean;
 }
 
 const style = {
@@ -165,7 +167,7 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       lastName: "",
       login: "",
       password: "",
-      privacyPolicy: true,
+      privacyPolicy: false,
       emailValidate: true,
       agreeTermsOfServices: true,
       passwordValidate: true,
@@ -177,6 +179,8 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       is1UpperCases: false,
       isPasswordContainsName: false,
       signupFailedMessage: "",
+      submitted: false,
+      signupSuccess: false,
     }
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -186,8 +190,9 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
   handleEmailChange(e: React.FormEvent<HTMLInputElement>): void {
     this.setState({ 
       email: e.currentTarget.value, 
-      emailValidate: emailRegex.test(e.currentTarget.value)}
-    )
+      emailValidate: emailRegex.test(e.currentTarget.value),
+      signupFailed: false,
+    })
   }
 
   handlePasswordChange(e: React.FormEvent<HTMLInputElement>): void {
@@ -207,49 +212,49 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       is1LowerCases, 
       is8Characters,
       isPasswordContainsName,
-      passwordValidate: is1UpperCases && is1Numbers && is1LowerCases && is8Characters && isPasswordContainsName
+      passwordValidate: is1UpperCases && is1Numbers && is1LowerCases && is8Characters && isPasswordContainsName,
+      signupFailed: false,
     });
   }
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     const { email, password, privacyPolicy } = this.state;
+    if(!email || !password) { this.setState({ submitted: true}); return; };
     if (emailRegex.test(email)) {
-      if (privacyPolicy) {
-        this.setState({ signupStage: true });
-        const firstName = email.split("@")[0];
-        const lastName = firstName;
+      this.setState({ signupStage: true });
+      const firstName = email.split("@")[0];
+      const lastName = firstName;
 
-        const headers: HeadersInit = new Headers();
-        headers.append("Accept", "application/json");
-        headers.append("Content-Type", "application/json");
-        headers.append("q", "0.01");
-        headers.append("User-Agent", "request");
+      const headers: HeadersInit = new Headers();
+      headers.append("Accept", "application/json");
+      headers.append("Content-Type", "application/json");
+      headers.append("q", "0.01");
+      headers.append("User-Agent", "request");
 
-        fetch(`${process.env.REACT_APP_SIGNUP_URL}`, {
-          method: "post",
-          headers,
-          body: JSON.stringify({
-            userProfile: {
-              email,
-              firstName,
-              lastName,
-              password,
-            }
-          })
-        }).then(res => res.json())
-          .then(resp => {
-            this.setState({ signupStage: false })
-            if (resp.errorCauses) {
-              this.setState({ 
-                signupFailed: true,
-                signupFailedMessage: resp.errorCauses[0].errorSummary
-              });
-            }
-          })
-      } else {
-        this.setState({ agreeTermsOfServices: false})
-      }
+      fetch(`${process.env.REACT_APP_SIGNUP_URL}`, {
+        method: "post",
+        headers,
+        body: JSON.stringify({
+          userProfile: {
+            email,
+            firstName,
+            lastName,
+            password,
+          }
+        })
+      }).then(res => res.json())
+        .then(resp => {
+          this.setState({ signupStage: false })
+          if (resp.errorCauses) {
+            this.setState({ 
+              signupFailed: true,
+              signupFailedMessage: resp.errorCauses[0].errorSummary
+            });
+          } else {
+            this.setState({ signupSuccess: true });
+          }
+        })
     } else {
       this.setState({ emailValidate: false });
     }
@@ -268,7 +273,12 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       isPasswordContainsName,
       is1Numbers,
       signupFailedMessage,
+      email,
+      password,
+      submitted,
+      signupSuccess,
     } = this.state;
+    if(signupSuccess) return <Redirect to="/" />
 
     return (
       <div className="container-fluid login">
@@ -290,9 +300,9 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                       placeholder="Email"
                       value={ this.state.email }
                       onChange={ this.handleEmailChange }
-                      required
                     />
                     {!emailValidate && <small>Email is not valid</small>}
+                    {!email && submitted && <small>Email is required</small>}
                   </div>
                   <div className="form-row my-3 password">
                     <input
@@ -302,15 +312,14 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                       autoComplete="off"
                       value={ this.state.password }
                       onChange={ this.handlePasswordChange }
-                      required
                     />
-
                     <div
                       className="agreements password-view"
                       dangerouslySetInnerHTML={{ __html: showPassword ? showsvg: hidesvg }}
                       onClick={() => this.setState({ showPassword: !showPassword})}
                     >
                     </div>
+                    {!password && submitted && <small>Password is required</small>}
                   </div>
                   {
                     !passwordValidate &&
@@ -360,29 +369,32 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                   </div>
                   <div className={`form-row my-4 ${!signupFailed && `mb-1`}`}>
                     <button type="submit" className="btn btn-primary mb-2 login-button">
-                      { signupStage ? `Signning Up...`: `Sign Up`}
+                      { signupStage ? `Signing Up...`: `Sign Up`}
                     </button>
+                    { 
+                      signupFailed &&
+                        <div className={ `form-row failed-message` } style={{ width: "100%" }}>
+                          <p>{signupFailedMessage}</p>
+                        </div> 
+                    }
                   </div>
-                  { 
-                    signupFailed &&
-                    <div className={ `form-row failed-message mb-5` }>
-                      <p>{signupFailedMessage}</p>
-                    </div> 
-                  }
+
                   <div className="form-row awstipsform text-center">
                     <small>
-                      By clicking on "Sign Up", you agree to our Terms & acknowledge reading our&nbsp;
+                      By clicking on "Sign Up", you agree to our &nbsp;
+                      <Link to="/terms">Terms</Link>&nbsp; 
+                      & acknowledge reading our&nbsp;
                       <Link to="/privacy">
                         Privacy Policy
                       </Link>
                     </small>
                   </div>
-                  { 
+                  {/* { 
                   !privacyPolicy &&
                     <div className="form-row service-content">
                       <h6>Please agree our terms of services</h6>
                     </div>
-                  }
+                  } */}
                   <div className="form-row mb-5 my-3 have-account text-center">
                     <h6>Already have an account?<Link to="/login">Login</Link></h6>
                   </div>

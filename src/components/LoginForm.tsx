@@ -152,9 +152,7 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
                     value={ password }
                     onChange={this.handlePasswordChange}
                   />
-                  <Link to="/forgotpassword" className="forgot-link">
-                    Forgot Password?
-                  </Link>
+                  
                 </div>
                 <div className="form-row keepmelogin">
                   <div>
@@ -171,6 +169,11 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
                         />
                     }
                     <span className="text-white">Keep me logged in</span>
+                  </div>
+                  <div className="forgot-password">
+                    <Link to="/forgotpassword" className="forgot-link">
+                      Forgot Password?
+                    </Link>
                   </div>
                 </div>
                 <div className={`form-row ${!loginFailed && `mb-5`}`}>
