@@ -22,6 +22,7 @@ interface State {
   email?: string;
   emailValidate?: boolean;
   clickedSendEmail?: boolean;
+  firstEmailRequest?: boolean;
 }
 
 class ForgotForm extends Component<Props, State> {
@@ -30,7 +31,8 @@ class ForgotForm extends Component<Props, State> {
     this.state = {
       email: "",
       emailValidate: true,
-      clickedSendEmail: false
+      clickedSendEmail: false,
+      firstEmailRequest: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -39,8 +41,10 @@ class ForgotForm extends Component<Props, State> {
   handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     const { email } = this.state;
+    this.setState({ clickedSendEmail: true })
+
     if (email) {
-      this.setState({ clickedSendEmail: true })
+      this.setState({ firstEmailRequest: true });
       fetch(`${process.env.REACT_APP_FORGOT_PASSWORD_URL}`, {
         method: "post",
         headers: {
@@ -65,7 +69,9 @@ class ForgotForm extends Component<Props, State> {
   render() { 
     const {
       emailValidate,
-      clickedSendEmail
+      clickedSendEmail,
+      email,
+      firstEmailRequest,
     } = this.state;
     return ( 
       <div className="container-fluid login">
@@ -86,13 +92,13 @@ class ForgotForm extends Component<Props, State> {
                     placeholder="Enter Email"
                     value={ this.state.email }
                     onChange={ this.handleEmailChange }
-                    required
                   />
                   {!emailValidate && <small>Email is not valid</small>}
+                  {clickedSendEmail && !email && <small>Email is required</small>}
                 </div>
                 <div className="form-row mb-5">
                   <button type="submit" className="btn btn-primary mb-2 login-button">
-                    {!clickedSendEmail ? `send reset password link`: `Resend`}
+                    {!firstEmailRequest ? `send reset password link`: `Resend`}
                   </button>
                 </div>
                 <div>

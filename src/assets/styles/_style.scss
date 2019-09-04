@@ -1,4 +1,6 @@
 $background_color: #3579DC;
+$error_color: #fbff00;
+
 @mixin checkbox {
   background: rgba(40, 40, 40, 0.2);
   appearance: none;
@@ -61,7 +63,7 @@ $background_color: #3579DC;
       p {
         margin: auto;
         font-weight: 100;
-        color: red;
+        color: #fbff00;
       }
     }
     .login-button {
@@ -106,20 +108,15 @@ $background_color: #3579DC;
           @include checkbox();
         }
       }
-      .forgot-link {
-        font-family: "proxima-nova, sans-serif";
-        // position: absolute;
-        top: 10px;
-        right: 20px;
-        color: #fff;
-        text-decoration: underline;
+      small {
+        color: #fbff00;
       }
     }
     .password-hint {
       margin-left: -10px;
       .error {
         display: inline-flex;
-        color: red;
+        color: #fbff00;
         span {
           margin-left: 10px;
           margin-top: 4px;
@@ -136,7 +133,7 @@ $background_color: #3579DC;
     }
     .email {
       small {
-        color: red;
+        color: #fbff00;
       }
     }
     .agreements {
@@ -170,6 +167,17 @@ $background_color: #3579DC;
         font-weight: 100;
       }
       padding-bottom: 5%;
+      .forgot-password {
+        position: absolute;
+        right: 10%;
+        .forgot-link {
+          font-family: "Proxima Nova Semibold";
+          text-transform: uppercase;
+          top: 10px;
+          color: #fff;
+          text-decoration: underline;
+        }
+      }
     }
     .awstipsform {
       input {
@@ -179,6 +187,7 @@ $background_color: #3579DC;
         color: #fff;
         margin-left: 10px;
         font-weight: 100;
+        font-size: 101%;
       }
       span {
         text-align: center;
@@ -190,7 +199,7 @@ $background_color: #3579DC;
     }
     .service-content {
       h6 {
-        color: red;
+        color: #fbff00;
       }
     }
     .have-account {
