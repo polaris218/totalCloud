@@ -147,6 +147,7 @@ export interface SignupFormState {
   is1LowerCases: boolean;
   is1UpperCases: boolean;
   isPasswordContainsName: boolean;
+  signupFailedMessage: string;
 }
 
 const style = {
@@ -175,6 +176,7 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       is1LowerCases: false,
       is1UpperCases: false,
       isPasswordContainsName: false,
+      signupFailedMessage: "",
     }
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -239,7 +241,10 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
           .then(resp => {
             this.setState({ signupStage: false })
             if (resp.errorCauses) {
-              this.setState({ signupFailed: true });
+              this.setState({ 
+                signupFailed: true,
+                signupFailedMessage: resp.errorCauses[0].errorSummary
+              });
             }
           })
       } else {
@@ -262,6 +267,7 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       is8Characters,
       isPasswordContainsName,
       is1Numbers,
+      signupFailedMessage,
     } = this.state;
 
     return (
@@ -360,7 +366,7 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                   { 
                     signupFailed &&
                     <div className={ `form-row failed-message mb-5` }>
-                      <p>Signup Failed</p>
+                      <p>{signupFailedMessage}</p>
                     </div> 
                   }
                   <div className="form-row awstipsform text-center">
