@@ -85,7 +85,7 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
         this.setState({
           loginFailed: true,
           loginStage: false,
-          loginFailedMessage: "Login Failed",
+          loginFailedMessage: "Email or Password are incorrect",
         });
         console.log('Found an error', err);
       });
