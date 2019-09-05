@@ -1,5 +1,5 @@
 $background_color: #3579DC;
-$error_color: #fbff00;
+$error_color: #690404;
 
 @mixin checkbox {
   background: rgba(40, 40, 40, 0.2);
@@ -28,6 +28,7 @@ $error_color: #fbff00;
     background: $background_color;
     box-shadow: 0 7px 30px 0 rgba(0,0,0,0.61);
     min-height: 635px;
+    font-family: "Proxima Nova Light";
     form {
       font-family: "Proxima Nova Light";
       margin: auto;
@@ -63,7 +64,7 @@ $error_color: #fbff00;
       p {
         margin: auto;
         font-weight: 100;
-        color: #fbff00;
+        color: $error_color;
       }
     }
     .login-button {
@@ -109,14 +110,14 @@ $error_color: #fbff00;
         }
       }
       small {
-        color: #fbff00;
+        color: $error_color;
       }
     }
     .password-hint {
       margin-left: -10px;
       .error {
         display: inline-flex;
-        color: #fbff00;
+        color: $error_color;
         span {
           margin-left: 10px;
           margin-top: 4px;
@@ -133,7 +134,7 @@ $error_color: #fbff00;
     }
     .email {
       small {
-        color: #fbff00;
+        color: $error_color;
       }
     }
     .agreements {
@@ -199,7 +200,7 @@ $error_color: #fbff00;
     }
     .service-content {
       h6 {
-        color: #fbff00;
+        color: $error_color;
       }
     }
     .have-account {
@@ -229,6 +230,15 @@ $error_color: #fbff00;
       a {
         color: #fff;
         text-decoration: underline;
+      }
+    }
+    .verification {
+      .title {
+        font-family: "Proxima Nova Semibold";
+      }
+      .content {
+        width: 75%;
+        margin: auto;
       }
     }
     @media screen and (max-width: 1201px) {

@@ -8,6 +8,7 @@ import Reset from "./pages/Reset";
 import Home from "./pages/Home";
 import Forgot from "./pages/Forgot";
 import Protected from "./pages/Protected";
+import Verification from "./pages/Verification";
 import './App.css';
 
 const onAuthRequired: any = ({ history }: any) => {
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <Route path="/reset" exact component={ Reset } />
           <Route path="/forgotpassword" exact component={ Forgot } />
           <SecureRoute path="/protected" exact component={Protected} />
+          <Route path="/verification-sent" exact component={Verification} />
           <Route path="/implicit/callback" exact component={ImplicitCallback} />
         </Switch>
       </Security>
