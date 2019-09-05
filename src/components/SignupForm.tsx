@@ -10,7 +10,7 @@ const emailRegex = RegExp(
 );
 
 const errorsvg = `
-<?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'><svg height="8" style="overflow:visible;enable-background:new 0 0 16 16" viewBox="0 0 16 16" width="16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g id="Error_1_"><g id="Error"><circle cx="16" cy="16" id="BG" r="16" style="fill:#D72828;"/><path d="M14.5,25h3v-3h-3V25z M14.5,6v13h3V6H14.5z" id="Exclamatory_x5F_Sign" style="fill:#E6E6E6;"/></g></g></g></svg>`
+<?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.0//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'><svg height="8" style="overflow:visible;enable-background:new 0 0 16 16" viewBox="0 0 16 16" width="16" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g id="Error_1_"><g id="Error"><circle cx="16" cy="16" id="BG" r="16" style="fill:#D72828;"/><path d="M14.5,25h3v-3h-3V25z M14.5,6v13h3V6H14.5z" id="Exclamatory_x5F_Sign" style="fill:#690404;"/></g></g></g></svg>`
 
 const showsvg = `
 <?xml version="1.0" encoding="iso-8859-1"?>
@@ -219,7 +219,7 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    const { email, password, privacyPolicy } = this.state;
+    const { email, password } = this.state;
     if(!email || !password) { this.setState({ submitted: true}); return; };
     if (emailRegex.test(email)) {
       this.setState({ signupStage: true });
@@ -259,6 +259,7 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       this.setState({ emailValidate: false });
     }
   }
+
   render() { 
     const {
       showPassword,
@@ -278,7 +279,8 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
       submitted,
       signupSuccess,
     } = this.state;
-    if(signupSuccess) return <Redirect to="/" />
+
+    if(signupSuccess) return <Redirect to="/verification-sent" />
 
     return (
       <div className="container-fluid login">
@@ -389,12 +391,6 @@ class SignupForm extends Component<SignupFormProps, SignupFormState> {
                       </Link>
                     </small>
                   </div>
-                  {/* { 
-                  !privacyPolicy &&
-                    <div className="form-row service-content">
-                      <h6>Please agree our terms of services</h6>
-                    </div>
-                  } */}
                   <div className="form-row mb-5 my-3 have-account text-center">
                     <h6>Already have an account?<Link to="/login">Login</Link></h6>
                   </div>
