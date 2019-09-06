@@ -9,6 +9,9 @@ import Home from "./pages/Home";
 import Forgot from "./pages/Forgot";
 import Protected from "./pages/Protected";
 import Verification from "./pages/Verification";
+import Expiration from "./pages/Expiration";
+import Page404 from "./pages/404";
+
 import './App.css';
 
 const onAuthRequired: any = ({ history }: any) => {
@@ -27,12 +30,14 @@ const App: React.FC = () => {
         <Switch>
           <Route path='/' exact component={Home} />
           <Route path="/login" exact render={() => <Login baseUrl={process.env.REACT_APP_BASE_URL} />} />
-          <Route path="/signup" exact component={ Signup } />
-          <Route path="/reset" exact component={ Reset } />
-          <Route path="/forgotpassword" exact component={ Forgot } />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/reset" exact component={Reset} />
+          <Route path="/forgotpassword" exact component={Forgot} />
+          <Route path="/expired" exact component={Expiration} />
           <SecureRoute path="/protected" exact component={Protected} />
           <Route path="/verification-sent" exact component={Verification} />
           <Route path="/implicit/callback" exact component={ImplicitCallback} />
+          <Route path="/*" exact component={Page404} />
         </Switch>
       </Security>
     </Router>
