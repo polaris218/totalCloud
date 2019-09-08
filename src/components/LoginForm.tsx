@@ -170,9 +170,9 @@ export default withAuth(class LoginForm extends Component<LoginFormProps, LoginF
                     }
                     <span className="text-white">Keep me logged in</span>
                   </div>
-                  <div className="forgot-password">
+                  <div className="forgot-password ml-auto">
                     <Link to="/forgotpassword" className="forgot-link">
-                      Forgot Password?
+                      <span>Forgot Password?</span>
                     </Link>
                   </div>
                 </div>

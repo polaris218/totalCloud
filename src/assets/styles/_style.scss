@@ -169,8 +169,8 @@ $error_color: #690404;
       }
       padding-bottom: 5%;
       .forgot-password {
-        position: absolute;
-        right: 10%;
+        // position: absolute;
+        // right: 10%;
         .forgot-link {
           font-family: "Proxima Nova Semibold";
           text-transform: uppercase;
@@ -205,6 +205,7 @@ $error_color: #690404;
     }
     .have-account {
       padding-top: 20%;
+      
       a {
         font-weight: 600;
         text-decoration: none;
@@ -212,6 +213,7 @@ $error_color: #690404;
         text-transform: uppercase;
         margin-left: 15px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3) ;
+        text-align: center
       }
     }
     input::placeholder {
