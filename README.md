@@ -2,4 +2,17 @@
 
 > [Website](https://app.totalcloud.network)
 
+## Okta information
+
+>REACT_APP_BASE_URL=https://oauth.totalcloud.network
+REACT_APP_ISSUER=https://oauth.totalcloud.network/oauth2/default
+REACT_APP_FORGOT_PASSWORD_URL=https://oauth.totalcloud.network/api/v1/authn/recovery/password
+REACT_APP_RESET_PASSWORD_URL=https://oauth.totalcloud.network/api/v1/authn/credentials/reset_password
+REACT_APP_RECOVERY_PASSWORD_URL=https://oauth.totalcloud.network/api/v1/authn/recovery/token
+REACT_APP_SIGNUP_URL=https://oauth.totalcloud.network/api/v1/registration/regj98hxgwEhgsMh30h7/register
+REACT_APP_CREATE_USER=https://oauth.totalcloud.network/api/v1/users?activate=false
+
+>REACT_APP_CLIENTID=0oajbq246rUWUEDq30h7 
+>REACT_APP_API_KEY=00-dWUt9Tq4HeX2BKn-eq0QCRDEs1eWfhyAgAC886-
+
 ![](https://github.com/actiongeek/totalCloud/blob/master/images/function.png?raw=true)
